@@ -28,78 +28,133 @@ class _CalendarDialogState extends State<CalendarDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      insetPadding: EdgeInsets.only(left: 12,right: 12),
+      backgroundColor: Colors.white,
+      
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Quick Select Buttons
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Quick Select Buttons
+          Padding(
+            padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: _quickSelectButton("Today", DateTime.now())),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: _quickSelectButton("Next Monday", _getNextMonday()),
+                    ),
+                  ],
+                ),
+                   SizedBox(height: 10),
             Row(
               children: [
-                Expanded(child: _quickSelectButton("Today", DateTime.now())),
+                Expanded(
+                  child: _quickSelectButton("Next Tuesday", _getNextTuesday()),
+                ),
                 SizedBox(width: 10),
-                Expanded(child: _quickSelectButton("Next Monday", _getNextMonday())),
+                Expanded(
+                  child: _quickSelectButton(
+                    "After 1 Week",
+                    _selectedDay.add(Duration(days: 7)),
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(child: _quickSelectButton("Next Tuesday", _getNextTuesday())),
-                SizedBox(width: 10),
-                Expanded(child: _quickSelectButton("After 1 Week", _selectedDay.add(Duration(days: 7)))),
               ],
             ),
-            SizedBox(height: 16),
-            // Calendar Widget
-            TableCalendar(
-              focusedDay: _selectedDay,
-              firstDay: DateTime.utc(2020, 1, 1),
-              lastDay: DateTime.utc(2030, 12, 31),
-              calendarStyle: CalendarStyle(
-                todayDecoration: BoxDecoration(color: Colors.blue.shade100, shape: BoxShape.circle),
-                selectedDecoration: BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+          ),
+       
+          SizedBox(height: 16),
+          // Calendar Widget
+          TableCalendar(
+            focusedDay: _selectedDay,
+            firstDay: DateTime.utc(2020, 1, 1),
+            lastDay: DateTime.utc(2030, 12, 31),
+            calendarStyle: CalendarStyle(
+              todayDecoration: BoxDecoration(
+                color: Colors.blue.shade100,
+                shape: BoxShape.circle,
               ),
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
-                rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black),
+              selectedDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.circle,
               ),
-              selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() => _selectedDay = selectedDay);
-              },
             ),
-            Divider(),
-            Padding(
+            headerStyle: HeaderStyle(
+              formatButtonVisible: false,
+              titleCentered: true,
+            leftChevronMargin: EdgeInsets.only(left: 30),
+            rightChevronMargin:  EdgeInsets.only(right: 30),
+              leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
+              rightChevronIcon: Icon(
+                Icons.chevron_right,
+                color: Colors.black,
+              ),
+            ),
+            selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() => _selectedDay = selectedDay);
+            },
+          ),
+          Divider(),
+         Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Expanded(
                     child: Row(
                       children: [
-                        Icon(Icons.calendar_today, color: Colors.blue, size: 20),
+                        Icon(
+                          Icons.calendar_today,
+                          color: Colors.blue,
+                          size: 20,
+                        ),
                         SizedBox(width: 5),
                         Text(
                           DateFormat('d MMM yyyy').format(_selectedDay),
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(width: 10),
-                  _actionButton("Cancel", Colors.blue.shade100, Colors.blue, () => Navigator.pop(context)),
-                  SizedBox(width: 10),
-                  _actionButton("Save", Colors.blue, Colors.white, () {
-                    widget.onDateSelected(_selectedDay);
-                    Navigator.pop(context);
-                  }),
+    
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: _actionButton(
+                            "Cancel",
+                            Colors.blue.shade100,
+                            Colors.blue,
+                            () => Navigator.pop(context),
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        Expanded(
+                          child: _actionButton(
+                            "Save",
+                            Colors.blue,
+                            Colors.white,
+                            () {
+                              widget.onDateSelected(_selectedDay);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -112,23 +167,30 @@ class _CalendarDialogState extends State<CalendarDialog> {
         elevation: 0,
         backgroundColor: isSelected ? Colors.blue : Colors.blue.shade100,
         foregroundColor: isSelected ? Colors.white : Colors.blue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1)),
       ),
       child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 
-  Widget _actionButton(String label, Color bgColor, Color textColor, VoidCallback onPressed) {
+  Widget _actionButton(
+    String label,
+    Color bgColor,
+    Color textColor,
+    VoidCallback onPressed,
+  ) {
     return Expanded(
       child: ElevatedButton(
+        
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           elevation: 0,
           backgroundColor: bgColor,
           foregroundColor: textColor,
+           padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        child: Text(label, maxLines: 1),
+        child: Flexible(child: Text(label, maxLines: 1)),
       ),
     );
   }
@@ -142,6 +204,8 @@ class _CalendarDialogState extends State<CalendarDialog> {
   DateTime _getNextTuesday() {
     DateTime now = DateTime.now();
     int daysUntilTuesday = (DateTime.tuesday - now.weekday + 7) % 7;
-    return now.add(Duration(days: daysUntilTuesday == 0 ? 7 : daysUntilTuesday));
+    return now.add(
+      Duration(days: daysUntilTuesday == 0 ? 7 : daysUntilTuesday),
+    );
   }
 }
