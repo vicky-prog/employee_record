@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:employee_record/data/local/database/app_database.dart';
 import 'package:employee_record/presentation/blocs/bloc/employee_bloc.dart';
+import 'package:employee_record/presentation/pages/add_employee.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,7 +55,11 @@ class EmployeeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showAddDialog(context);
+         // _showAddDialog(context);
+                          Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => AddEmployeePage()),
+);
         },
         child: Icon(Icons.add),
       ),
@@ -85,6 +90,8 @@ class EmployeeScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+
+
                 final newEmployee = EmployeesCompanion(
                   name: Value(nameController.text),
                   position: Value(positionController.text),

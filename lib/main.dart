@@ -19,12 +19,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+     scaffoldBackgroundColor: Colors.white,
+         inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+           
+            borderSide: const BorderSide(color: Colors.grey, width: 1),
+          ),
+          enabledBorder: OutlineInputBorder(
+            
+            borderSide: const BorderSide(color: Colors.grey, width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            
+            borderSide: const BorderSide(color: Colors.blue, width: 2), // Global Focused Border Color
+          ),
+        ),
         appBarTheme: AppBarTheme(
       backgroundColor: HexColor(AppColors.blue), 
       elevation: 0, 
       // iconTheme: IconThemeData(color: Colors.white), // Optional: Icon color
-      // titleTextStyle: TextStyle(color: Colors.white, fontSize: 20), // Text color
+       titleTextStyle: TextStyle(color: Colors.white, fontSize: 18), // Text color
     ),
       ),
      
