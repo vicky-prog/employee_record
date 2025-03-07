@@ -15,7 +15,7 @@ class EmployeeService {
     return await _employeeDao.insertEmployee(employee);
   }
 
-  Future<bool> updateEmployee(Employee employee) async {
+  Future<bool> updateEmployee(EmployeesCompanion employee) async {
     return await _employeeDao.updateEmployee(employee);
   }
 

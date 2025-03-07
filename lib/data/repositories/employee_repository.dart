@@ -8,7 +8,7 @@ class EmployeeRepository {
 
   Future<List<Employee>> fetchEmployees() => _employeeService.getAllEmployees();
   Future<int> addNewEmployee(EmployeesCompanion employee) => _employeeService.addEmployee(employee);
-   Future<bool> updateEmployee(Employee employee) => 
+   Future<bool> updateEmployee(EmployeesCompanion employee) => 
       _employeeService.updateEmployee(employee);
   Future<int> deleteEmployee(int id) => _employeeService.removeEmployee(id);
 }

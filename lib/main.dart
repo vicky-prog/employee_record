@@ -1,6 +1,6 @@
 import 'package:employee_record/config/dependencies.dart';
 import 'package:employee_record/presentation/core/themes/app_colors.dart' show AppColors;
-import 'package:employee_record/presentation/pages/employee_list.dart';
+import 'package:employee_record/presentation/pages/employee_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';

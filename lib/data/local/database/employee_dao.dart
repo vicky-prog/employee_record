@@ -11,7 +11,7 @@ class EmployeeDao extends DatabaseAccessor<AppDatabase> with _$EmployeeDaoMixin 
 
   Future<List<Employee>> getEmployees() => select(employees).get();
   Future<int> insertEmployee(EmployeesCompanion employee) => into(employees).insert(employee);
-    Future<bool> updateEmployee(Employee employee) => 
+    Future<bool> updateEmployee(EmployeesCompanion employee) => 
       update(employees).replace(employee);
   Future<int> deleteEmployee(int id) => (delete(employees)..where((e) => e.id.equals(id))).go();
 }
