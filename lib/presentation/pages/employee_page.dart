@@ -210,7 +210,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      _openCalendarDialog();
+                      _openCalendarDialog(false);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -246,7 +246,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 SizedBox(width: 16), // Gap of 16px
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                        _openCalendarDialog(true);
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -364,11 +366,12 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     );
   }
 
-   void _openCalendarDialog() {
+   void _openCalendarDialog(bool toDate) {
     showDialog(
       context: context,
       builder: (context) {
         return CalendarDialog(
+          toDate: toDate,
           selectedDay: _selectedDay,
           onDateSelected: (newDate) {
             setState(() {
