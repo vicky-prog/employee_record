@@ -27,9 +27,24 @@ class MyApp extends StatelessWidget {
       // titleTextStyle: TextStyle(color: Colors.white, fontSize: 20), // Text color
     ),
       ),
+     
       home:  EmployeeScreen()
       
     );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: const Text("ssss"));
   }
 }
 

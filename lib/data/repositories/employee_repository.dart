@@ -1,5 +1,5 @@
-import 'package:employee_record/data/local/app_database.dart';
-import 'package:employee_record/data/local/services/employee_service.dart';
+import 'package:employee_record/data/local/database/app_database.dart';
+import 'package:employee_record/data/services/employee_service.dart';
 
 class EmployeeRepository {
   final EmployeeService _employeeService;

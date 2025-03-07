@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:employee_record/data/local/app_database.dart';
+import 'package:employee_record/data/local/database/app_database.dart';
 
 part 'employee_dao.g.dart'; // ✅ Ensure this is present!
 
