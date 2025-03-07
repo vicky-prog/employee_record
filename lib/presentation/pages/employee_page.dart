@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:employee_record/presentation/blocs/bloc/employee_bloc.dart';
+import 'package:employee_record/presentation/widgets/calendar_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:employee_record/data/local/database/app_database.dart';
@@ -13,6 +14,7 @@ class EmployeeScreen extends StatefulWidget {
 
 class _EmployeeScreenState extends State<EmployeeScreen> {
   String selectedRole = "Select role";
+  DateTime _selectedDay = DateTime.now();
  final TextEditingController nameController = TextEditingController(
      
     );
@@ -46,6 +48,14 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         Navigator.pop(context);
       },
     );
+  }
+
+  @override
+  void initState() {
+   WidgetsBinding.instance.addPostFrameCallback((_){
+      context.read<EmployeeBloc>().add(LoadEmployees());
+   });
+    super.initState();
   }
 
   @override
@@ -199,7 +209,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      _openCalendarDialog();
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -346,38 +358,25 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
               ),
             ),
           ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     final employee = EmployeesCompanion(
-          //       id:
-          //           state.editingEmployee != null
-          //               ? Value(
-          //                 state.editingEmployee!.id,
-          //               ) // ✅ Preserve ID for updates
-          //               : const Value.absent(), // ✅ Auto-increment for new entries
-          //       name: Value(nameController.text),
-          //       position: Value(state.selectedRole),
-          //       dateOfJoining: Value(DateTime.now()),
-          //     );
-
-          //     if (state.formState == EmployeeFormState.add) {
-          //       context.read<EmployeeBloc>().add(AddEmployee(employee));
-          //     } else {
-          //       context.read<EmployeeBloc>().add(UpdateEmployee(employee));
-          //     }
-
-          //     context.read<EmployeeBloc>().add(
-          //       SwitchFormState(formState: EmployeeFormState.list),
-          //     );
-          //   },
-          //   child: Text(
-          //     state.formState == EmployeeFormState.add
-          //         ? "Add Employee"
-          //         : "Update Employee",
-          //   ),
-          // ),
+     
         ],
       ),
+    );
+  }
+
+   void _openCalendarDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CalendarDialog(
+          selectedDay: _selectedDay,
+          onDateSelected: (newDate) {
+            setState(() {
+              _selectedDay = newDate;
+            });
+          },
+        );
+      },
     );
   }
 }

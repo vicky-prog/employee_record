@@ -1,6 +1,7 @@
 part of 'employee_bloc.dart';
 
 enum EmployeeFormState { list, add, edit }
+
 class EmployeeState extends Equatable {
   final List<Employee> employees;
   final EmployeeFormState formState;
