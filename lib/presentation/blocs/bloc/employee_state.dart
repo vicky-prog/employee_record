@@ -33,3 +33,5 @@ class EmployeeUpdated extends EmployeeState {
   @override
   List<Object?> get props => [employee];
 }
+
+

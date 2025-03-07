@@ -256,4 +256,13 @@ class _AddEmployeePageState extends State<AddEmployeePage> {
     context.read<EmployeeBloc>().add(AddEmployee(newEmployee));
     Navigator.pop(context);
   }
+
+  _updateEnployee(Employee employee) {
+    final updatedEmployee = employee.copyWith(
+      name: _nameController.text,
+      position: Value(selectedRole),
+    );
+    context.read<EmployeeBloc>().add(UpdateEmployee(updatedEmployee));
+    Navigator.pop(context);
+  }
 }
