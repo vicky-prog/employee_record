@@ -58,6 +58,24 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final state = context.read<EmployeeBloc>().state;
+
+    if (state.formState == EmployeeFormState.edit && state.editingEmployee != null) {
+      nameController.text = state.editingEmployee!.name;
+      selectedRole = state.editingEmployee!.position ?? "Select role";
+      _fromDate = state.editingEmployee!.dateOfJoining;
+      _toDate = state.editingEmployee!.lastWorkingDay;
+    } else if (state.formState == EmployeeFormState.add) {
+      nameController.clear();
+      selectedRole = "Select role";
+      _fromDate = null;
+      _toDate = null;
+    }
+  }
+
+  @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<EmployeeBloc>().add(LoadEmployees());
@@ -160,6 +178,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
   // Employee Form (Add/Edit)
   Widget _buildEmployeeForm(BuildContext context, EmployeeState state) {
+    
     return Column(
       children: [
         Expanded(
