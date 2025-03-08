@@ -1,6 +1,14 @@
 import 'package:employee_record/data/local/database/app_database.dart';
 import 'package:flutter/material.dart';
 
+extension StringExtension on String {
+  String capitalizeFirst() {
+    if (isEmpty) return this;
+    return this[0].toUpperCase() + substring(1);
+  }
+}
+
+
 const sizedBoxSpacing = SizedBox(height: 5);
 class EmployeeCard extends StatelessWidget {
   final Employee employee;
@@ -25,7 +33,7 @@ class EmployeeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(employee.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(employee.name.capitalizeFirst(), style: const TextStyle(fontWeight: FontWeight.bold)),
             sizedBoxSpacing,
             Text(employee.position ?? ""),
             sizedBoxSpacing,
