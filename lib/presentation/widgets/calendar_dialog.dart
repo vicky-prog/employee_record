@@ -4,26 +4,27 @@ import 'package:flutter/material.dart';
 
 class CalendarDialog extends StatefulWidget {
   final DateTime selectedDay;
-  final Function(DateTime) onDateSelected;
+  final Function(DateTime?) onDateSelected;
   bool? toDate;
-   CalendarDialog({
+  CalendarDialog({
     super.key,
     required this.selectedDay,
     required this.onDateSelected,
-     this.toDate = false
+    this.toDate = false,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _CalendarDialogState createState() => _CalendarDialogState();
 }
 
 class _CalendarDialogState extends State<CalendarDialog> {
-  late DateTime _selectedDay;
+  DateTime? _selectedDay;
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = widget.selectedDay;
+    _selectedDay = (widget.toDate ?? false) ? null : widget.selectedDay;
   }
 
   @override
@@ -41,64 +42,59 @@ class _CalendarDialogState extends State<CalendarDialog> {
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
             child: Column(
               children: [
-                
-              widget.toDate ?? false ? Padding(
-                  padding: const EdgeInsets.only(top:8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _quickSelectButton(
-                          "No Date",
-                          _getNextTuesday(),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: _quickSelectButton(
-                          "Today",
-                          _selectedDay.add(Duration(days: 7)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ):
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _quickSelectButton("Today", DateTime.now()),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: _quickSelectButton(
-                            "Next Monday",
-                            _getNextMonday(),
+                widget.toDate ?? false
+                    ? Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(child: _quickSelectButton("No Date", null)),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: _quickSelectButton("Today", DateTime.now()),
                           ),
+                        ],
+                      ),
+                    )
+                    : Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _quickSelectButton(
+                                "Today",
+                                DateTime.now(),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: _quickSelectButton(
+                                "Next Monday",
+                                _getNextMonday(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _quickSelectButton(
+                                "Next Tuesday",
+                                _getNextTuesday(),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: _quickSelectButton(
+                                "After 1 Week",
+
+                                DateTime.now().add(Duration(days: 7)),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                        SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _quickSelectButton(
-                        "Next Tuesday",
-                        _getNextTuesday(),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: _quickSelectButton(
-                        "After 1 Week",
-                        _selectedDay.add(Duration(days: 7)),
-                      ),
-                    ),
-                  ],
-                ),
-                  ],
-                ),
-            
               ],
             ),
           ),
@@ -106,7 +102,7 @@ class _CalendarDialogState extends State<CalendarDialog> {
           SizedBox(height: 16),
           // Calendar Widget
           TableCalendar(
-            focusedDay: _selectedDay,
+            focusedDay: _selectedDay ?? DateTime.now(),
             firstDay: DateTime.utc(2020, 1, 1),
             lastDay: DateTime.utc(2030, 12, 31),
             calendarStyle: CalendarStyle(
@@ -148,7 +144,9 @@ class _CalendarDialogState extends State<CalendarDialog> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          DateFormat('d MMM yyyy').format(_selectedDay),
+                          _selectedDay == null
+                              ? "No Date"
+                              : DateFormat('d MMM yyyy').format(_selectedDay!),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -180,7 +178,12 @@ class _CalendarDialogState extends State<CalendarDialog> {
                                 Colors.blue,
                                 Colors.white,
                                 () {
-                                  widget.onDateSelected(_selectedDay);
+                                  if (_selectedDay != null) {
+                                    widget.onDateSelected(_selectedDay!);
+                                  }else{
+                                     widget.onDateSelected(null);
+                                  }
+
                                   Navigator.pop(context);
                                 },
                               ),
@@ -199,10 +202,15 @@ class _CalendarDialogState extends State<CalendarDialog> {
     );
   }
 
-  Widget _quickSelectButton(String label, DateTime date) {
-    bool isSelected = isSameDay(date, _selectedDay);
+  Widget _quickSelectButton(String label, DateTime? date) {
+    bool isSelected =
+        date == null ? _selectedDay == null : isSameDay(date, _selectedDay);
+
     return ElevatedButton(
-      onPressed: () => setState(() => _selectedDay = date),
+      onPressed:
+          () => setState(() {
+            _selectedDay = date;
+          }),
       style: ElevatedButton.styleFrom(
         elevation: 0,
         backgroundColor: isSelected ? Colors.blue : Colors.blue.shade100,

@@ -14,10 +14,11 @@ class EmployeeScreen extends StatefulWidget {
 
 class _EmployeeScreenState extends State<EmployeeScreen> {
   String selectedRole = "Select role";
-  DateTime _selectedDay = DateTime.now();
- final TextEditingController nameController = TextEditingController(
-     
-    );
+
+  final TextEditingController nameController = TextEditingController();
+  DateTime? _fromDate;
+  DateTime? _toDate;
+
   void _showRoleBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -52,15 +53,14 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
   @override
   void initState() {
-   WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<EmployeeBloc>().add(LoadEmployees());
-   });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-     
     return Scaffold(
       appBar: AppBar(title: Text(_buildAppBarTitle(context))),
       body: BlocBuilder<EmployeeBloc, EmployeeState>(
@@ -76,18 +76,19 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           }
         },
       ),
-      
-     floatingActionButton: context.watch<EmployeeBloc>().state.formState == EmployeeFormState.list
-    ? FloatingActionButton(
-        onPressed: () {
-          context.read<EmployeeBloc>().add(
-            SwitchFormState(formState: EmployeeFormState.add),
-          );
-        },
-        child: Icon(Icons.add),
-      )
-    : null,
 
+      floatingActionButton:
+          context.watch<EmployeeBloc>().state.formState ==
+                  EmployeeFormState.list
+              ? FloatingActionButton(
+                onPressed: () {
+                  context.read<EmployeeBloc>().add(
+                    SwitchFormState(formState: EmployeeFormState.add),
+                  );
+                },
+                child: Icon(Icons.add),
+              )
+              : null,
     );
   }
 
@@ -101,6 +102,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         return "Add Employee";
       case EmployeeFormState.edit:
         return "Edit Employee";
+      // ignore: unreachable_switch_default
       default:
         return "Employee Records";
     }
@@ -127,7 +129,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                       employee: employee,
                       name: employee.name,
                       selectedRole: employee.position ?? "Select role",
-                      dateOfJoining: employee.dateOfJoining
+                      dateOfJoining: employee.dateOfJoining,
                     ),
                   );
                 },
@@ -145,10 +147,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     );
   }
 
-  // ✅ Employee Form (Add/Edit)
+  // Employee Form (Add/Edit)
   Widget _buildEmployeeForm(BuildContext context, EmployeeState state) {
-  // nameController.text = state.name;
-
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Column(
@@ -233,7 +233,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                           ),
                           SizedBox(width: 8), // Adjusted spacing
                           Text(
-                            "Today",
+                            _fromDate != null
+                                ? "${_fromDate!.day}/${_fromDate!.month}/${_fromDate!.year}"
+                                : "Today",
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ],
@@ -247,7 +249,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                        _openCalendarDialog(true);
+                      _openCalendarDialog(true);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -270,7 +272,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                           ),
                           SizedBox(width: 8), // Adjusted spacing
                           Text(
-                            "No date",
+                            _toDate != null
+                                ? "${_toDate!.day}/${_toDate!.month}/${_toDate!.year}"
+                                : "No date",
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
                         ],
@@ -286,12 +290,12 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
           Container(
             decoration: BoxDecoration(
-              color: Colors.white, // Background color
+              color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black12, // Light shadow
-                  blurRadius: 4, // Softness of the shadow
-                  offset: Offset(0, -2), // Shadow direction (top side)
+                  color: Colors.black12,
+                  blurRadius: 4,
+                  offset: Offset(0, -2),
                 ),
               ],
             ),
@@ -303,9 +307,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 children: [
                   TextButton(
                     onPressed: () {
-                       context.read<EmployeeBloc>().add(
-      SwitchFormState(formState: EmployeeFormState.list),
-    );
+                      context.read<EmployeeBloc>().add(
+                        SwitchFormState(formState: EmployeeFormState.list),
+                      );
                     }, // Handle Cancel
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.blue, // Text color
@@ -324,8 +328,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                             state.editingEmployee != null
                                 ? Value(
                                   state.editingEmployee!.id,
-                                ) // ✅ Preserve ID for updates
-                                : const Value.absent(), // ✅ Auto-increment for new entries
+                                ) // Preserve ID for updates
+                                : const Value.absent(), //  Auto-increment for new entries
                         name: Value(nameController.text),
                         position: Value(selectedRole),
                         dateOfJoining: Value(DateTime.now()),
@@ -360,23 +364,29 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
               ),
             ),
           ),
-     
         ],
       ),
     );
   }
 
-   void _openCalendarDialog(bool toDate) {
+  void _openCalendarDialog(bool toDate) {
     showDialog(
       context: context,
       builder: (context) {
         return CalendarDialog(
           toDate: toDate,
-          selectedDay: _selectedDay,
+          selectedDay:
+              toDate ? _toDate ?? DateTime.now() : _fromDate ?? DateTime.now(),
           onDateSelected: (newDate) {
-            setState(() {
-              _selectedDay = newDate;
-            });
+           // if (newDate != null) {
+              setState(() {
+                if (toDate) {
+                  _toDate = newDate;
+                } else {
+                  _fromDate = newDate;
+                }
+              });
+            //}
           },
         );
       },
