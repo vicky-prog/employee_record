@@ -9,8 +9,9 @@ class EmployeeState extends Equatable {
   final String selectedRole;
   final String name;
   final String? errorMessage;
+  final String? successMessage;
   final bool isLoading;
-  final DateTime? dateOfJoining; // ✅ Added dateOfJoining
+  final DateTime? dateOfJoining; 
 
   const EmployeeState({
     this.employees = const [],
@@ -19,8 +20,9 @@ class EmployeeState extends Equatable {
     this.selectedRole = "Select role",
     this.name = "",
     this.errorMessage,
+    this.successMessage,
     this.isLoading = false,
-    this.dateOfJoining, // ✅ Added here
+    this.dateOfJoining, 
   });
 
   EmployeeState copyWith({
@@ -30,8 +32,9 @@ class EmployeeState extends Equatable {
     String? selectedRole,
     String? name,
     String? errorMessage,
+    String? successMessage,
     bool? isLoading,
-    DateTime? dateOfJoining, // ✅ Added parameter
+    DateTime? dateOfJoining, 
   }) {
     return EmployeeState(
       employees: employees ?? this.employees,
@@ -40,8 +43,9 @@ class EmployeeState extends Equatable {
       selectedRole: selectedRole ?? this.selectedRole,
       name: name ?? this.name,
       errorMessage: errorMessage,
+      successMessage: successMessage,
       isLoading: isLoading ?? this.isLoading,
-      dateOfJoining: dateOfJoining ?? this.dateOfJoining, // ✅ Updated
+      dateOfJoining: dateOfJoining ?? this.dateOfJoining, 
     );
   }
 
@@ -53,7 +57,8 @@ class EmployeeState extends Equatable {
         selectedRole,
         name,
         errorMessage,
+        successMessage,
         isLoading,
-        dateOfJoining, // ✅ Added here
+        dateOfJoining, 
       ];
 }

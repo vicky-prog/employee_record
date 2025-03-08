@@ -28,44 +28,65 @@ class EmployeeList extends StatelessWidget {
       );
     }
 
+    final bool showCurrentSection = currentEmployees.isNotEmpty;
+    final bool showPreviousSection = previousEmployees.isNotEmpty;
+
+    final int totalItems = currentEmployees.length +
+        previousEmployees.length +
+        (showCurrentSection ? 1 : 0) +
+        (showPreviousSection ? 1 : 0);
+
     return ListView.separated(
       separatorBuilder: (context, index) =>
           Divider(thickness: 0.5, height: 0.8, color: Colors.grey.shade300),
-      itemCount: currentEmployees.length + previousEmployees.length + 2,
+      itemCount: totalItems,
       itemBuilder: (context, index) {
-        if (index == 0) {
-          return const SectionHeader(title: "Current Employees");
-        } else if (index <= currentEmployees.length) {
+        int adjustedIndex = index;
+        
+        // Show "Current Employees" header if needed
+        if (showCurrentSection) {
+          if (index == 0) return const SectionHeader(title: "Current Employees");
+          adjustedIndex--;
+        }
+
+        // Show current employees
+        if (adjustedIndex < currentEmployees.length) {
           return InkWell(
             onTap: () {
-              onTap(currentEmployees[index - 1]);
+              onTap(currentEmployees[adjustedIndex]);
             },
             child: EmployeeCard(
-              employee: currentEmployees[index - 1],
+              employee: currentEmployees[adjustedIndex],
               onDismissed: () {
-                onDismissed(currentEmployees[index - 1]);
-              },
-            ),
-          );
-        } else if (index == currentEmployees.length + 1) {
-          return const SectionHeader(title: "Previous Employees");
-        } else {
-          final previousIndex = index - currentEmployees.length - 2; // Adjust index
-          return InkWell(
-            onTap: () {
-              onTap(previousEmployees[previousIndex]);
-            },
-            child: EmployeeCard(
-              employee: previousEmployees[previousIndex],
-              onDismissed: () {
-                onDismissed(previousEmployees[previousIndex]);
+                onDismissed(currentEmployees[adjustedIndex]);
               },
             ),
           );
         }
+        adjustedIndex -= currentEmployees.length;
+
+        // Show "Previous Employees" header if needed
+        if (showPreviousSection) {
+          if (adjustedIndex == 0) return const SectionHeader(title: "Previous Employees");
+          adjustedIndex--;
+        }
+
+        // Show previous employees
+        return InkWell(
+          onTap: () {
+            onTap(previousEmployees[adjustedIndex]);
+          },
+          child: EmployeeCard(
+            employee: previousEmployees[adjustedIndex],
+            onDismissed: () {
+              onDismissed(previousEmployees[adjustedIndex]);
+            },
+          ),
+        );
       },
     );
   }
 }
+
 
 

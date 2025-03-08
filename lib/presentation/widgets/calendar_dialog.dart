@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 
 class CalendarDialog extends StatefulWidget {
   final DateTime selectedDay;
+  final DateTime? disableDay;
   final Function(DateTime?) onDateSelected;
   bool? toDate;
+  bool? allowPast;
   CalendarDialog({
     super.key,
     required this.selectedDay,
     required this.onDateSelected,
     this.toDate = false,
+    this.disableDay,
+    this.allowPast = false
   });
 
   @override
@@ -115,6 +119,20 @@ class _CalendarDialogState extends State<CalendarDialog> {
                 shape: BoxShape.circle,
               ),
             ),
+            // Disable past dates
+            enabledDayPredicate: (day) {
+              if(widget.allowPast!){
+               return true;
+              }
+              var today = DateTime.now();
+              if(widget.disableDay != null){
+                 today = widget.disableDay!;
+              }
+              return !day.isBefore(
+                DateTime(today.year, today.month, today.day),
+              ); // Allow today & future
+            },
+
             headerStyle: HeaderStyle(
               formatButtonVisible: false,
               titleCentered: true,
@@ -125,6 +143,7 @@ class _CalendarDialogState extends State<CalendarDialog> {
             ),
             selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
             onDaySelected: (selectedDay, focusedDay) {
+              
               setState(() => _selectedDay = selectedDay);
             },
           ),
@@ -180,8 +199,8 @@ class _CalendarDialogState extends State<CalendarDialog> {
                                 () {
                                   if (_selectedDay != null) {
                                     widget.onDateSelected(_selectedDay!);
-                                  }else{
-                                     widget.onDateSelected(null);
+                                  } else {
+                                    widget.onDateSelected(null);
                                   }
 
                                   Navigator.pop(context);
@@ -213,9 +232,9 @@ class _CalendarDialogState extends State<CalendarDialog> {
           }),
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: isSelected ? Colors.blue : Colors.blue.shade100,
+        backgroundColor: isSelected ? Colors.blue : Colors.blue.shade50,
         foregroundColor: isSelected ? Colors.white : Colors.blue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
       ),
       child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );

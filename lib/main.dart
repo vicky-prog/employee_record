@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
      scaffoldBackgroundColor: Colors.white,
+     bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: Colors.white
+     ),
          inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
            

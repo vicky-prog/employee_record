@@ -2,10 +2,8 @@ import 'package:drift/drift.dart' show Value;
 import 'package:employee_record/presentation/blocs/bloc/employee_bloc.dart';
 import 'package:employee_record/presentation/widgets/calendar_dialog.dart';
 import 'package:employee_record/presentation/widgets/date_selection_row.dart';
-import 'package:employee_record/presentation/widgets/employee_card.dart';
 import 'package:employee_record/presentation/widgets/employee_list.dart';
 import 'package:employee_record/presentation/widgets/fotter.dart';
-import 'package:employee_record/presentation/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:employee_record/data/local/database/app_database.dart';
@@ -22,28 +20,33 @@ class EmployeeScreen extends StatefulWidget {
 }
 
 class _EmployeeScreenState extends State<EmployeeScreen> {
-  String selectedRole = "Select role";
+  String selectedRole = "";
 
   final TextEditingController nameController = TextEditingController();
   DateTime? _fromDate;
   DateTime? _toDate;
 
+  final List<String> _roles = ["Product Designer","Flutter Developer","QA Tester","Product Owner"];
+
   void _showRoleBottomSheet() {
     showModalBottomSheet(
+      
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) {
-        return ListView(
-          shrinkWrap: true,
+        return Wrap(
           children: [
-            _buildRoleOption("Product Designer"),
-            _buildRoleOption("Flutter Developer"),
-            _buildRoleOption("QA Tester"),
-            _buildRoleOption("Product Owner"),
+            ListView.separated(
+               shrinkWrap: true,
+              itemBuilder: (context, index,)=>_buildRoleOption(_roles[index]), 
+               separatorBuilder: (context, index) =>
+              Divider(thickness: 0.5, height: 0.8, color: Colors.grey.shade300),
+               itemCount: _roles.length),
           ],
         );
+      
       },
     );
   }
@@ -68,12 +71,12 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     if (state.formState == EmployeeFormState.edit &&
         state.editingEmployee != null) {
       nameController.text = state.editingEmployee!.name;
-      selectedRole = state.editingEmployee!.position ?? "Select role";
+      selectedRole = state.editingEmployee!.position ?? "";
       _fromDate = state.editingEmployee!.dateOfJoining;
       _toDate = state.editingEmployee!.lastWorkingDay;
     } else if (state.formState == EmployeeFormState.add) {
       nameController.clear();
-      selectedRole = "Select role";
+      selectedRole = "";
       _fromDate = null;
       _toDate = null;
     }
@@ -90,47 +93,102 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_buildAppBarTitle(context))),
-      body: BlocBuilder<EmployeeBloc, EmployeeState>(
-        builder: (context, state) {
-          if (state.isLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state.errorMessage != null) {
-            return Center(child: Text(state.errorMessage!));
-          } else if (state.formState == EmployeeFormState.list) {
-            return Column(
-              children: [
-                Expanded(child: EmployeeList(employees: state.employees, onDismissed: (employee) { 
-                 context.read<EmployeeBloc>().add(DeleteEmployee(employee.id));
-                 }, onTap: (employee) { 
-                
-                   context.read<EmployeeBloc>().add(
-                    SwitchFormState(
-                      formState: EmployeeFormState.edit,
-                      employee: employee,
-                      name: employee.name,
-                      selectedRole: employee.position ?? "Select role",
-                      dateOfJoining: employee.dateOfJoining,
+      appBar: AppBar(
+        title: Text(_buildAppBarTitle(context)),
+        actions: [
+          context.watch<EmployeeBloc>().state.formState ==
+                  EmployeeFormState.edit
+              ? IconButton(
+                onPressed: () {
+                  context.read<EmployeeBloc>().add(
+                    DeleteEmployee(
+                      context.read<EmployeeBloc>().state.editingEmployee!.id,
                     ),
                   );
-                  },)),
-                Container(
-                  color: Colors.grey.shade200,
-                  height: 80,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text("Swipe left to delete")),
-                  ),
-                ),
-              ],
+                   context.read<EmployeeBloc>().add(SwitchFormState(formState: EmployeeFormState.list));
+                },
+                icon: Icon(Icons.delete_forever, color: Colors.white),
+              )
+              : SizedBox(),
+        ],
+      ),
+
+      body: BlocListener<EmployeeBloc, EmployeeState>(
+        listenWhen:
+            (previous, current) =>
+                previous.successMessage != current.successMessage ||
+                previous.errorMessage != current.errorMessage,
+        listener: (context, state) {
+          if (state.successMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.successMessage!),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 1),
+              ),
             );
-          } else {
-            return _buildEmployeeForm(context, state);
+          }
+          if (state.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage!),
+                backgroundColor: Colors.red,
+                duration: Duration(seconds: 1),
+              ),
+            );
           }
         },
+        child: BlocBuilder<EmployeeBloc, EmployeeState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state.errorMessage != null) {
+              return Center(child: Text(state.errorMessage!));
+            } else if (state.formState == EmployeeFormState.list) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: EmployeeList(
+                      employees: state.employees,
+                      onDismissed: (employee) {
+                        context.read<EmployeeBloc>().add(
+                          DeleteEmployee(employee.id),
+                        );
+                      },
+                      onTap: (employee) {
+                        context.read<EmployeeBloc>().add(
+                          SwitchFormState(
+                            formState: EmployeeFormState.edit,
+                            employee: employee,
+                            name: employee.name,
+                            selectedRole: employee.position ?? "",
+                            dateOfJoining: employee.dateOfJoining,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  state.employees.isNotEmpty
+                      ? Container(
+                        color: Colors.grey.shade200,
+                        height: 80,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("Swipe left to delete"),
+                          ),
+                        ),
+                      )
+                      : SizedBox(),
+                ],
+              );
+            } else {
+              return _buildEmployeeForm(context, state);
+            }
+          },
+        ),
       ),
 
       floatingActionButton:
@@ -138,10 +196,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                   EmployeeFormState.list
               ? FloatingActionButton(
                 backgroundColor: Colors.blue,
-                 elevation: 5.0, 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0), 
-        ),
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 onPressed: () {
                   context.read<EmployeeBloc>().add(
                     SwitchFormState(formState: EmployeeFormState.add),
@@ -166,8 +224,6 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     }
   }
 
-
-
   // Employee Form (Add/Edit)
   Widget _buildEmployeeForm(BuildContext context, EmployeeState state) {
     return Column(
@@ -188,10 +244,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                   // Date Selection Row
                   DateSelectionRow(
                     onFromDateTap: () {
-                      _openCalendarDialog(false);
+                      _openCalendarDialog(false, state);
                     },
                     onToDateTap: () {
-                      _openCalendarDialog(true);
+                      _openCalendarDialog(true, state);
                     },
                     fromDate: _fromDate,
                     toDate: _toDate,
@@ -219,9 +275,11 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   _employeeNameField() {
     return SizedBox(
       height: _inputFiledheight,
+
       child: TextFormField(
         controller: nameController,
         cursorHeight: 18,
+
         decoration: InputDecoration(
           hintText: "Employee name",
           prefixIcon: const Icon(Icons.person, color: Colors.blue, size: 18),
@@ -248,12 +306,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                selectedRole,
+                selectedRole.isEmpty ? "Select role" : selectedRole,
                 style: TextStyle(
-                  color:
-                      selectedRole == "Select role"
-                          ? Colors.grey
-                          : Colors.black,
+                  color: selectedRole == "" ? Colors.grey : Colors.black,
                 ),
               ),
             ),
@@ -264,13 +319,25 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     );
   }
 
-  _saveEmployee(BuildContext context, EmployeeState state) {
+  void _saveEmployee(BuildContext context, EmployeeState state) {
+    final name = nameController.text.trim();
+
+    // ✅ Validation: Ensure name and position are not empty
+    if (name.isEmpty) {
+      _showSnackBar(context, "Please enter the employee's name.");
+      return;
+    }
+    if (selectedRole.isEmpty) {
+      _showSnackBar(context, "Please select a position.");
+      return;
+    }
+
     final employee = EmployeesCompanion(
       id:
           state.editingEmployee != null
               ? Value(state.editingEmployee!.id)
               : const Value.absent(),
-      name: Value(nameController.text),
+      name: Value(name),
       position: Value(selectedRole),
       dateOfJoining: Value(_fromDate ?? DateTime.now()),
       lastWorkingDay: _toDate != null ? Value(_toDate!) : const Value.absent(),
@@ -287,24 +354,76 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     );
   }
 
-  void _openCalendarDialog(bool toDate) {
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _openCalendarDialog(bool toDate, EmployeeState state) {
     showDialog(
       context: context,
       builder: (context) {
         return CalendarDialog(
+          allowPast: state.formState == EmployeeFormState.edit,
+          disableDay:
+              state.formState == EmployeeFormState.edit
+                  ? null
+                  : (toDate ? _fromDate : null),
+
           toDate: toDate,
           selectedDay:
-              toDate ? _toDate ?? DateTime.now() : _fromDate ?? DateTime.now(),
+              toDate
+                  ? _toDate ?? _fromDate ?? DateTime.now()
+                  : _fromDate ?? DateTime.now(),
           onDateSelected: (newDate) {
-            // if (newDate != null) {
+            if (newDate == null) return;
+
+            final today = DateTime.now();
+            final selectedDate = DateTime(
+              newDate.year,
+              newDate.month,
+              newDate.day,
+            );
+            final minAllowedDate = DateTime(
+              today.year,
+              today.month,
+              today.day,
+            ); // Remove time
+
+            if (selectedDate.isBefore(minAllowedDate)) {
+              //  Prevent past dates
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("You cannot select past dates")),
+              );
+              return;
+            }
+
+            if (toDate &&
+                _fromDate != null &&
+                selectedDate.isBefore(_fromDate!)) {
+              //  Prevent "To Date" from being before "From Date"
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("To Date cannot be before From Date")),
+              );
+              return;
+            }
+
             setState(() {
               if (toDate) {
-                _toDate = newDate;
+                _toDate = selectedDate;
               } else {
-                _fromDate = newDate;
+                _fromDate = selectedDate;
+                if (_toDate != null && _toDate!.isBefore(_fromDate!)) {
+                  _toDate = null; // Reset To Date if it's invalid
+                }
               }
             });
-            //}
           },
         );
       },
