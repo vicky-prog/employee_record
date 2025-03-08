@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Employee Record Manager',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
      scaffoldBackgroundColor: Colors.white,
@@ -52,17 +52,5 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: const Text("ssss"));
-  }
-}
 

@@ -6,10 +6,10 @@ abstract class EmployeeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// ✅ Load Employees
+//  Load Employees
 class LoadEmployees extends EmployeeEvent {}
 
-// ✅ Add a New Employee
+//  Add a New Employee
 class AddEmployee extends EmployeeEvent {
   final EmployeesCompanion employee;
   const AddEmployee(this.employee);
@@ -18,7 +18,7 @@ class AddEmployee extends EmployeeEvent {
   List<Object?> get props => [employee];
 }
 
-// ✅ Update an Employee
+//  Update an Employee
 class UpdateEmployee extends EmployeeEvent {
   final EmployeesCompanion employee;
   const UpdateEmployee(this.employee);
@@ -27,7 +27,7 @@ class UpdateEmployee extends EmployeeEvent {
   List<Object?> get props => [employee];
 }
 
-// ✅ Delete an Employee
+//  Delete an Employee
 class DeleteEmployee extends EmployeeEvent {
   final int id;
   const DeleteEmployee(this.id);
@@ -41,14 +41,14 @@ class SwitchFormState extends EmployeeEvent {
   final Employee? employee;
   final String name;
   final String selectedRole;
-  final DateTime? dateOfJoining; // ✅ Added Date of Joining
+  final DateTime? dateOfJoining; 
 
   const SwitchFormState({
     required this.formState,
     this.employee,
     this.name = "",
     this.selectedRole = "Select role",
-    this.dateOfJoining, // ✅ Default to null
+    this.dateOfJoining, 
   });
 
   @override
