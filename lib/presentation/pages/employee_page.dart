@@ -1,9 +1,15 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:employee_record/presentation/blocs/bloc/employee_bloc.dart';
 import 'package:employee_record/presentation/widgets/calendar_dialog.dart';
+import 'package:employee_record/presentation/widgets/date_selection_row.dart';
+import 'package:employee_record/presentation/widgets/fotter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:employee_record/data/local/database/app_database.dart';
+
+double _radies = 4;
+double _inputFiledheight = 45;
+const sizedBoxSpacing = SizedBox(height: 20);
 
 class EmployeeScreen extends StatefulWidget {
   const EmployeeScreen({super.key});
@@ -97,19 +103,24 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
     switch (state.formState) {
       case EmployeeFormState.list:
-        return "Employee Records";
+        return "Employee List";
       case EmployeeFormState.add:
-        return "Add Employee";
+        return "Add Employee Details";
       case EmployeeFormState.edit:
-        return "Edit Employee";
-      // ignore: unreachable_switch_default
-      default:
-        return "Employee Records";
+        return "Edit Employee Details";
     }
   }
 
-  // ✅ Employee List View
+  //  Employee List View
   Widget _buildEmployeeList(BuildContext context, EmployeeState state) {
+    if (state.employees.isEmpty) {
+      return Center(
+        child: Image.asset(
+          'assets/images/no_record.png', // Replace with your actual image path
+          height: 150,
+        ),
+      );
+    }
     return ListView.builder(
       itemCount: state.employees.length,
       itemBuilder: (context, index) {
@@ -149,225 +160,120 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
   // Employee Form (Add/Edit)
   Widget _buildEmployeeForm(BuildContext context, EmployeeState state) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 45, // Exact height
-            child: TextFormField(
-              controller: nameController,
-              cursorHeight: 18,
-              decoration: InputDecoration(
-                hintText: "Employee name",
-                prefixIcon: const Icon(
-                  Icons.person,
-                  color: Colors.blue,
-                  size: 18,
-                ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 8),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          // Select Role Field (Clickable)
-          GestureDetector(
-            onTap: _showRoleBottomSheet,
-            child: Container(
-              width: double.infinity,
-              height: 45, // Adjusted for better UX
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
                 children: [
-                  const Icon(Icons.work, color: Colors.blue),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      selectedRole,
-                      style: TextStyle(
-                        color:
-                            selectedRole == "Select role"
-                                ? Colors.grey
-                                : Colors.black,
-                      ),
-                    ),
-                  ),
-                  const Icon(Icons.arrow_drop_down, color: Colors.blue),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          // Date Selection Row
-          SizedBox(
-            height: 45, // Fixed height
-            child: Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  // Employee Name Field
+                  _employeeNameField(),
+                  sizedBoxSpacing,
+                  // Select Role Field (Clickable)
+                  _selectRoleField(),
+                  sizedBoxSpacing,
+
+                  // Date Selection Row
+                  DateSelectionRow(
+                    onFromDateTap: () {
                       _openCalendarDialog(false);
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400),
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white, // Match background
-                      ),
-                      child: Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.start, // Align text & icon
-                        children: [
-                          Icon(
-                            Icons.calendar_today,
-                            color: Colors.blue,
-                            size: 18,
-                          ),
-                          SizedBox(width: 8), // Adjusted spacing
-                          Text(
-                            _fromDate != null
-                                ? "${_fromDate!.day}/${_fromDate!.month}/${_fromDate!.year}"
-                                : "Today",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 16), // Gap of 16px
-                Icon(Icons.arrow_forward, color: Colors.blue, size: 20),
-                SizedBox(width: 16), // Gap of 16px
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                    onToDateTap: () {
                       _openCalendarDialog(true);
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400),
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white, // Match background
-                      ),
-                      child: Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.start, // Align text & icon
-                        children: [
-                          Icon(
-                            Icons.calendar_today,
-                            color: Colors.blue,
-                            size: 18,
-                          ),
-                          SizedBox(width: 8), // Adjusted spacing
-                          Text(
-                            _toDate != null
-                                ? "${_toDate!.day}/${_toDate!.month}/${_toDate!.year}"
-                                : "No date",
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const Spacer(),
-
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                  offset: Offset(0, -2),
-                ),
-              ],
-            ),
-
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      context.read<EmployeeBloc>().add(
-                        SwitchFormState(formState: EmployeeFormState.list),
-                      );
-                    }, // Handle Cancel
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.blue, // Text color
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text("Cancel"),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      final employee = EmployeesCompanion(
-                        id:
-                            state.editingEmployee != null
-                                ? Value(state.editingEmployee!.id)
-                                : const Value.absent(),
-                        name: Value(nameController.text),
-                        position: Value(selectedRole),
-                        dateOfJoining: Value(_fromDate!),
-                        lastWorkingDay:
-                            _toDate != null
-                                ? Value(_toDate!)
-                                : const Value.absent(),
-                      );
-
-                      if (state.formState == EmployeeFormState.add) {
-                        context.read<EmployeeBloc>().add(AddEmployee(employee));
-                      } else {
-                        context.read<EmployeeBloc>().add(
-                          UpdateEmployee(employee),
-                        );
-                      }
-
-                      context.read<EmployeeBloc>().add(
-                        SwitchFormState(formState: EmployeeFormState.list),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text("Save"),
+                    fromDate: _fromDate,
+                    toDate: _toDate,
                   ),
                 ],
               ),
             ),
           ),
-        ],
+        ),
+
+        EmployeeFormActions(
+          onCancel: () {
+            context.read<EmployeeBloc>().add(
+              SwitchFormState(formState: EmployeeFormState.list),
+            );
+          },
+          onSave: () {
+            _saveEmployee(context, state);
+          },
+        ),
+      ],
+    );
+  }
+
+  _employeeNameField() {
+    return SizedBox(
+      height: _inputFiledheight,
+      child: TextFormField(
+        controller: nameController,
+        cursorHeight: 18,
+        decoration: InputDecoration(
+          hintText: "Employee name",
+          prefixIcon: const Icon(Icons.person, color: Colors.blue, size: 18),
+          contentPadding: const EdgeInsets.symmetric(vertical: 8),
+        ),
       ),
+    );
+  }
+
+  _selectRoleField() {
+    return GestureDetector(
+      onTap: _showRoleBottomSheet,
+      child: Container(
+        width: double.infinity,
+        height: _inputFiledheight,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(_radies),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.work, color: Colors.blue),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                selectedRole,
+                style: TextStyle(
+                  color:
+                      selectedRole == "Select role"
+                          ? Colors.grey
+                          : Colors.black,
+                ),
+              ),
+            ),
+            const Icon(Icons.arrow_drop_down, color: Colors.blue),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _saveEmployee(BuildContext context, EmployeeState state) {
+    final employee = EmployeesCompanion(
+      id:
+          state.editingEmployee != null
+              ? Value(state.editingEmployee!.id)
+              : const Value.absent(),
+      name: Value(nameController.text),
+      position: Value(selectedRole),
+      dateOfJoining: Value(_fromDate ?? DateTime.now()),
+      lastWorkingDay: _toDate != null ? Value(_toDate!) : const Value.absent(),
+    );
+
+    if (state.formState == EmployeeFormState.add) {
+      context.read<EmployeeBloc>().add(AddEmployee(employee));
+    } else {
+      context.read<EmployeeBloc>().add(UpdateEmployee(employee));
+    }
+
+    context.read<EmployeeBloc>().add(
+      SwitchFormState(formState: EmployeeFormState.list),
     );
   }
 
