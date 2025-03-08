@@ -103,7 +103,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 Expanded(child: EmployeeList(employees: state.employees, onDismissed: (employee) { 
                  context.read<EmployeeBloc>().add(DeleteEmployee(employee.id));
                  }, onTap: (employee) { 
-                  print("ontap");
+                
                    context.read<EmployeeBloc>().add(
                     SwitchFormState(
                       formState: EmployeeFormState.edit,
@@ -166,52 +166,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     }
   }
 
-  //  Employee List View
-  Widget _buildEmployeeList2(BuildContext context, EmployeeState state) {
-    if (state.employees.isEmpty) {
-      return Center(
-        child: Image.asset(
-          'assets/images/no_record.png', // Replace with your actual image path
-          height: 150,
-        ),
-      );
-    }
-    return ListView.builder(
-      itemCount: state.employees.length,
-      itemBuilder: (context, index) {
-        final employee = state.employees[index];
-        return ListTile(
-          title: Text(employee.name),
-          subtitle: Text(employee.position ?? "No role"),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  context.read<EmployeeBloc>().add(
-                    SwitchFormState(
-                      formState: EmployeeFormState.edit,
-                      employee: employee,
-                      name: employee.name,
-                      selectedRole: employee.position ?? "Select role",
-                      dateOfJoining: employee.dateOfJoining,
-                    ),
-                  );
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  context.read<EmployeeBloc>().add(DeleteEmployee(employee.id));
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+
 
   // Employee Form (Add/Edit)
   Widget _buildEmployeeForm(BuildContext context, EmployeeState state) {
