@@ -58,8 +58,26 @@ class $EmployeesTable extends Employees
         type: DriftSqlType.dateTime,
         requiredDuringInsert: true,
       );
+  static const VerificationMeta _lastWorkingDayMeta = const VerificationMeta(
+    'lastWorkingDay',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name, position, dateOfJoining];
+  late final GeneratedColumn<DateTime> lastWorkingDay =
+      GeneratedColumn<DateTime>(
+        'last_working_day',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    position,
+    dateOfJoining,
+    lastWorkingDay,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -100,6 +118,15 @@ class $EmployeesTable extends Employees
     } else if (isInserting) {
       context.missing(_dateOfJoiningMeta);
     }
+    if (data.containsKey('last_working_day')) {
+      context.handle(
+        _lastWorkingDayMeta,
+        lastWorkingDay.isAcceptableOrUnknown(
+          data['last_working_day']!,
+          _lastWorkingDayMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -128,6 +155,10 @@ class $EmployeesTable extends Employees
             DriftSqlType.dateTime,
             data['${effectivePrefix}date_of_joining'],
           )!,
+      lastWorkingDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_working_day'],
+      ),
     );
   }
 
@@ -142,11 +173,13 @@ class Employee extends DataClass implements Insertable<Employee> {
   final String name;
   final String? position;
   final DateTime dateOfJoining;
+  final DateTime? lastWorkingDay;
   const Employee({
     required this.id,
     required this.name,
     this.position,
     required this.dateOfJoining,
+    this.lastWorkingDay,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -157,6 +190,9 @@ class Employee extends DataClass implements Insertable<Employee> {
       map['position'] = Variable<String>(position);
     }
     map['date_of_joining'] = Variable<DateTime>(dateOfJoining);
+    if (!nullToAbsent || lastWorkingDay != null) {
+      map['last_working_day'] = Variable<DateTime>(lastWorkingDay);
+    }
     return map;
   }
 
@@ -169,6 +205,10 @@ class Employee extends DataClass implements Insertable<Employee> {
               ? const Value.absent()
               : Value(position),
       dateOfJoining: Value(dateOfJoining),
+      lastWorkingDay:
+          lastWorkingDay == null && nullToAbsent
+              ? const Value.absent()
+              : Value(lastWorkingDay),
     );
   }
 
@@ -182,6 +222,7 @@ class Employee extends DataClass implements Insertable<Employee> {
       name: serializer.fromJson<String>(json['name']),
       position: serializer.fromJson<String?>(json['position']),
       dateOfJoining: serializer.fromJson<DateTime>(json['dateOfJoining']),
+      lastWorkingDay: serializer.fromJson<DateTime?>(json['lastWorkingDay']),
     );
   }
   @override
@@ -192,6 +233,7 @@ class Employee extends DataClass implements Insertable<Employee> {
       'name': serializer.toJson<String>(name),
       'position': serializer.toJson<String?>(position),
       'dateOfJoining': serializer.toJson<DateTime>(dateOfJoining),
+      'lastWorkingDay': serializer.toJson<DateTime?>(lastWorkingDay),
     };
   }
 
@@ -200,11 +242,14 @@ class Employee extends DataClass implements Insertable<Employee> {
     String? name,
     Value<String?> position = const Value.absent(),
     DateTime? dateOfJoining,
+    Value<DateTime?> lastWorkingDay = const Value.absent(),
   }) => Employee(
     id: id ?? this.id,
     name: name ?? this.name,
     position: position.present ? position.value : this.position,
     dateOfJoining: dateOfJoining ?? this.dateOfJoining,
+    lastWorkingDay:
+        lastWorkingDay.present ? lastWorkingDay.value : this.lastWorkingDay,
   );
   Employee copyWithCompanion(EmployeesCompanion data) {
     return Employee(
@@ -215,6 +260,10 @@ class Employee extends DataClass implements Insertable<Employee> {
           data.dateOfJoining.present
               ? data.dateOfJoining.value
               : this.dateOfJoining,
+      lastWorkingDay:
+          data.lastWorkingDay.present
+              ? data.lastWorkingDay.value
+              : this.lastWorkingDay,
     );
   }
 
@@ -224,13 +273,15 @@ class Employee extends DataClass implements Insertable<Employee> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('position: $position, ')
-          ..write('dateOfJoining: $dateOfJoining')
+          ..write('dateOfJoining: $dateOfJoining, ')
+          ..write('lastWorkingDay: $lastWorkingDay')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, position, dateOfJoining);
+  int get hashCode =>
+      Object.hash(id, name, position, dateOfJoining, lastWorkingDay);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -238,7 +289,8 @@ class Employee extends DataClass implements Insertable<Employee> {
           other.id == this.id &&
           other.name == this.name &&
           other.position == this.position &&
-          other.dateOfJoining == this.dateOfJoining);
+          other.dateOfJoining == this.dateOfJoining &&
+          other.lastWorkingDay == this.lastWorkingDay);
 }
 
 class EmployeesCompanion extends UpdateCompanion<Employee> {
@@ -246,17 +298,20 @@ class EmployeesCompanion extends UpdateCompanion<Employee> {
   final Value<String> name;
   final Value<String?> position;
   final Value<DateTime> dateOfJoining;
+  final Value<DateTime?> lastWorkingDay;
   const EmployeesCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.position = const Value.absent(),
     this.dateOfJoining = const Value.absent(),
+    this.lastWorkingDay = const Value.absent(),
   });
   EmployeesCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     this.position = const Value.absent(),
     required DateTime dateOfJoining,
+    this.lastWorkingDay = const Value.absent(),
   }) : name = Value(name),
        dateOfJoining = Value(dateOfJoining);
   static Insertable<Employee> custom({
@@ -264,12 +319,14 @@ class EmployeesCompanion extends UpdateCompanion<Employee> {
     Expression<String>? name,
     Expression<String>? position,
     Expression<DateTime>? dateOfJoining,
+    Expression<DateTime>? lastWorkingDay,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (position != null) 'position': position,
       if (dateOfJoining != null) 'date_of_joining': dateOfJoining,
+      if (lastWorkingDay != null) 'last_working_day': lastWorkingDay,
     });
   }
 
@@ -278,12 +335,14 @@ class EmployeesCompanion extends UpdateCompanion<Employee> {
     Value<String>? name,
     Value<String?>? position,
     Value<DateTime>? dateOfJoining,
+    Value<DateTime?>? lastWorkingDay,
   }) {
     return EmployeesCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       position: position ?? this.position,
       dateOfJoining: dateOfJoining ?? this.dateOfJoining,
+      lastWorkingDay: lastWorkingDay ?? this.lastWorkingDay,
     );
   }
 
@@ -302,6 +361,9 @@ class EmployeesCompanion extends UpdateCompanion<Employee> {
     if (dateOfJoining.present) {
       map['date_of_joining'] = Variable<DateTime>(dateOfJoining.value);
     }
+    if (lastWorkingDay.present) {
+      map['last_working_day'] = Variable<DateTime>(lastWorkingDay.value);
+    }
     return map;
   }
 
@@ -311,7 +373,8 @@ class EmployeesCompanion extends UpdateCompanion<Employee> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('position: $position, ')
-          ..write('dateOfJoining: $dateOfJoining')
+          ..write('dateOfJoining: $dateOfJoining, ')
+          ..write('lastWorkingDay: $lastWorkingDay')
           ..write(')'))
         .toString();
   }
@@ -334,6 +397,7 @@ typedef $$EmployeesTableCreateCompanionBuilder =
       required String name,
       Value<String?> position,
       required DateTime dateOfJoining,
+      Value<DateTime?> lastWorkingDay,
     });
 typedef $$EmployeesTableUpdateCompanionBuilder =
     EmployeesCompanion Function({
@@ -341,6 +405,7 @@ typedef $$EmployeesTableUpdateCompanionBuilder =
       Value<String> name,
       Value<String?> position,
       Value<DateTime> dateOfJoining,
+      Value<DateTime?> lastWorkingDay,
     });
 
 class $$EmployeesTableFilterComposer
@@ -369,6 +434,11 @@ class $$EmployeesTableFilterComposer
 
   ColumnFilters<DateTime> get dateOfJoining => $composableBuilder(
     column: $table.dateOfJoining,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastWorkingDay => $composableBuilder(
+    column: $table.lastWorkingDay,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -401,6 +471,11 @@ class $$EmployeesTableOrderingComposer
     column: $table.dateOfJoining,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get lastWorkingDay => $composableBuilder(
+    column: $table.lastWorkingDay,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$EmployeesTableAnnotationComposer
@@ -423,6 +498,11 @@ class $$EmployeesTableAnnotationComposer
 
   GeneratedColumn<DateTime> get dateOfJoining => $composableBuilder(
     column: $table.dateOfJoining,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastWorkingDay => $composableBuilder(
+    column: $table.lastWorkingDay,
     builder: (column) => column,
   );
 }
@@ -459,11 +539,13 @@ class $$EmployeesTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<String?> position = const Value.absent(),
                 Value<DateTime> dateOfJoining = const Value.absent(),
+                Value<DateTime?> lastWorkingDay = const Value.absent(),
               }) => EmployeesCompanion(
                 id: id,
                 name: name,
                 position: position,
                 dateOfJoining: dateOfJoining,
+                lastWorkingDay: lastWorkingDay,
               ),
           createCompanionCallback:
               ({
@@ -471,11 +553,13 @@ class $$EmployeesTableTableManager
                 required String name,
                 Value<String?> position = const Value.absent(),
                 required DateTime dateOfJoining,
+                Value<DateTime?> lastWorkingDay = const Value.absent(),
               }) => EmployeesCompanion.insert(
                 id: id,
                 name: name,
                 position: position,
                 dateOfJoining: dateOfJoining,
+                lastWorkingDay: lastWorkingDay,
               ),
           withReferenceMapper:
               (p0) =>

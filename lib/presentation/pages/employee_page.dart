@@ -326,13 +326,15 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                       final employee = EmployeesCompanion(
                         id:
                             state.editingEmployee != null
-                                ? Value(
-                                  state.editingEmployee!.id,
-                                ) // Preserve ID for updates
-                                : const Value.absent(), //  Auto-increment for new entries
+                                ? Value(state.editingEmployee!.id)
+                                : const Value.absent(),
                         name: Value(nameController.text),
                         position: Value(selectedRole),
-                        dateOfJoining: Value(DateTime.now()),
+                        dateOfJoining: Value(_fromDate!),
+                        lastWorkingDay:
+                            _toDate != null
+                                ? Value(_toDate!)
+                                : const Value.absent(),
                       );
 
                       if (state.formState == EmployeeFormState.add) {
@@ -378,14 +380,14 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           selectedDay:
               toDate ? _toDate ?? DateTime.now() : _fromDate ?? DateTime.now(),
           onDateSelected: (newDate) {
-           // if (newDate != null) {
-              setState(() {
-                if (toDate) {
-                  _toDate = newDate;
-                } else {
-                  _fromDate = newDate;
-                }
-              });
+            // if (newDate != null) {
+            setState(() {
+              if (toDate) {
+                _toDate = newDate;
+              } else {
+                _fromDate = newDate;
+              }
+            });
             //}
           },
         );

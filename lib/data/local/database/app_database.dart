@@ -1,6 +1,7 @@
 
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
+import 'package:employee_record/data/local/database/table/employee_table.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Colors;
 import 'package:path_provider/path_provider.dart';
@@ -8,13 +9,7 @@ import 'connection/connection.dart' as impl;
 
 part 'app_database.g.dart'; // Ensure this is generated!
 
-@DataClassName('Employee')
-class Employees extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  TextColumn get name => text().withLength(min: 1, max: 50)();
-  TextColumn get position => text().nullable()();
-  DateTimeColumn get dateOfJoining => dateTime()();
-}
+
 
 @DriftDatabase(tables: [Employees])
 class AppDatabase extends _$AppDatabase {
