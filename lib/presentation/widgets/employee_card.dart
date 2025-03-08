@@ -32,7 +32,7 @@ class EmployeeCard extends StatelessWidget {
              Text(
               employee.lastWorkingDay == null
                   ? "From ${formatDate(employee.dateOfJoining)}"
-                  : "${formatDate(employee.lastWorkingDay!)} - ${formatDate(employee.lastWorkingDay!)}",
+                  : "${formatDate(employee.dateOfJoining!)} - ${formatDate(employee.lastWorkingDay!)}",
               style: const TextStyle(color: Colors.grey,fontSize: 12),)
           
           ],

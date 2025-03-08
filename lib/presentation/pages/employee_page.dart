@@ -272,6 +272,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     );
   }
 
+  
+
   _employeeNameField() {
     return SizedBox(
       height: _inputFiledheight,
@@ -282,7 +284,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
         decoration: InputDecoration(
           hintText: "Employee name",
-          prefixIcon: const Icon(Icons.person, color: Colors.blue, size: 18),
+          prefixIcon: const Icon(Icons.person_outline, color: Colors.blue, ),
           contentPadding: const EdgeInsets.symmetric(vertical: 8),
         ),
       ),
@@ -302,8 +304,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         ),
         child: Row(
           children: [
-            const Icon(Icons.work, color: Colors.blue),
-            const SizedBox(width: 10),
+            const Icon(Icons.work_outline, color: Colors.blue),
+            const SizedBox(width: 15),
             Expanded(
               child: Text(
                 selectedRole.isEmpty ? "Select role" : selectedRole,
@@ -312,7 +314,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                 ),
               ),
             ),
-            const Icon(Icons.arrow_drop_down, color: Colors.blue),
+            const Icon(Icons.arrow_drop_down, color: Colors.blue,size: 30,),
           ],
         ),
       ),
@@ -322,7 +324,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   void _saveEmployee(BuildContext context, EmployeeState state) {
     final name = nameController.text.trim();
 
-    // ✅ Validation: Ensure name and position are not empty
+
     if (name.isEmpty) {
       _showSnackBar(context, "Please enter the employee's name.");
       return;
@@ -340,7 +342,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
       name: Value(name),
       position: Value(selectedRole),
       dateOfJoining: Value(_fromDate ?? DateTime.now()),
-      lastWorkingDay: _toDate != null ? Value(_toDate!) : const Value.absent(),
+     // lastWorkingDay:  Value(null)
+      lastWorkingDay: _toDate != null ? Value(_toDate!) : const Value(null),
     );
 
     if (state.formState == EmployeeFormState.add) {
@@ -360,73 +363,73 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         content: Text(message),
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.red,
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 1),
       ),
     );
   }
 
+  
+
   void _openCalendarDialog(bool toDate, EmployeeState state) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return CalendarDialog(
-          allowPast: state.formState == EmployeeFormState.edit,
-          disableDay:
-              state.formState == EmployeeFormState.edit
-                  ? null
-                  : (toDate ? _fromDate : null),
-
-          toDate: toDate,
-          selectedDay:
-              toDate
-                  ? _toDate ?? _fromDate ?? DateTime.now()
-                  : _fromDate ?? DateTime.now(),
-          onDateSelected: (newDate) {
-            if (newDate == null) return;
-
-            final today = DateTime.now();
-            final selectedDate = DateTime(
-              newDate.year,
-              newDate.month,
-              newDate.day,
-            );
-            final minAllowedDate = DateTime(
-              today.year,
-              today.month,
-              today.day,
-            ); // Remove time
-
-            if (selectedDate.isBefore(minAllowedDate)) {
-              //  Prevent past dates
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("You cannot select past dates")),
-              );
-              return;
-            }
-
-            if (toDate &&
-                _fromDate != null &&
-                selectedDate.isBefore(_fromDate!)) {
-              //  Prevent "To Date" from being before "From Date"
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("To Date cannot be before From Date")),
-              );
-              return;
-            }
-
+  showDialog(
+    context: context,
+    builder: (context) {
+      return CalendarDialog(
+        allowPast: state.formState == EmployeeFormState.edit,
+        disableDay: state.formState == EmployeeFormState.edit
+            ? null
+            : (toDate ? _fromDate : null),
+        toDate: toDate,
+        selectedDay: toDate
+            ? _toDate ?? _fromDate ?? DateTime.now()
+            : _fromDate ?? DateTime.now(),
+        onDateSelected: (newDate) {
+          if (state.formState == EmployeeFormState.edit && newDate == null) {
+            // Allow setting 'To Date' to null in edit mode
             setState(() {
               if (toDate) {
-                _toDate = selectedDate;
+                _toDate = null;
               } else {
-                _fromDate = selectedDate;
-                if (_toDate != null && _toDate!.isBefore(_fromDate!)) {
-                  _toDate = null; // Reset To Date if it's invalid
-                }
+                _fromDate = null;
               }
             });
-          },
-        );
-      },
-    );
-  }
+            return;
+          }
+
+          if (newDate == null) return;
+
+          final today = DateTime.now();
+          final selectedDate = DateTime(newDate.year, newDate.month, newDate.day);
+          final minAllowedDate = DateTime(today.year, today.month, today.day); // Remove time
+
+          if (selectedDate.isBefore(minAllowedDate) && state.formState != EmployeeFormState.edit) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("You cannot select past dates")),
+            );
+            return;
+          }
+
+          if (toDate && _fromDate != null && selectedDate.isBefore(_fromDate!)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("To Date cannot be before From Date")),
+            );
+            return;
+          }
+
+          setState(() {
+            if (toDate) {
+              _toDate = selectedDate;
+            } else {
+              _fromDate = selectedDate;
+              if (_toDate != null && _toDate!.isBefore(_fromDate!)) {
+                _toDate = null; // Reset To Date if it's invalid
+              }
+            }
+          });
+        },
+      );
+    },
+  );
+}
+
 }
