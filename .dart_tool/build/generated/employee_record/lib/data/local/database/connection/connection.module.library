@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":[],"parts":[],"conditionalDeps":[{"$default":"employee_record|lib/data/local/database/connection/unsupported.dart","dart.library.js_interop":"employee_record|lib/data/local/database/connection/web.dart","dart.library.ffi":"employee_record|lib/data/local/database/connection/native.dart"}],"sdkDeps":[],"hasMain":false}

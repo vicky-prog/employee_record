@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["pubspec_parse|lib/src/dependency.dart","pubspec_parse|lib/src/pubspec.dart","pubspec_parse|lib/src/screenshot.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

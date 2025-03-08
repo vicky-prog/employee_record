@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["sqlparser|lib/sqlparser.dart","sqlparser|lib/utils/node_to_text.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

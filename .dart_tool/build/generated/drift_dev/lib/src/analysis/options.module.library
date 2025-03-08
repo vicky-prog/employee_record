@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["charcode|lib/ascii.dart","drift|lib/drift.dart","json_annotation|lib/json_annotation.dart","meta|lib/meta.dart","recase|lib/recase.dart","sqlparser|lib/sqlparser.dart","string_scanner|lib/string_scanner.dart"],"parts":["drift_dev|lib/src/generated/analysis/options.g.dart"],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","flutter|lib/src/foundation/constants.dart"],"parts":[],"conditionalDeps":[{"$default":"flutter|lib/src/foundation/_timeline_io.dart","dart.library.js_interop":"flutter|lib/src/foundation/_timeline_web.dart"}],"sdkDeps":["developer","typed_data"],"hasMain":false}

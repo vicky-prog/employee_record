@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["collection|lib/collection.dart","flutter|lib/foundation.dart","flutter|lib/rendering.dart","flutter|lib/services.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

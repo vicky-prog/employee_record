@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["build|lib/build.dart","drift_dev|lib/src/analysis/preprocess_drift.dart","drift_dev|lib/src/backends/build/backend.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["convert"],"hasMain":false}

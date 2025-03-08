@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["_fe_analyzer_shared|lib/src/macros/compiler/message_grouper.dart","_fe_analyzer_shared|lib/src/macros/compiler/byte_data_serializer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","io","typed_data"],"hasMain":false}

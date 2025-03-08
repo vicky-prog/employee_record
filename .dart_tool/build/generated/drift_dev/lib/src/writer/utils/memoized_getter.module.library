@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift_dev|lib/src/writer/writer.dart","recase|lib/recase.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

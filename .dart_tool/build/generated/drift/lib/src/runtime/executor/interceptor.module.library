@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/src/runtime/api/runtime_api.dart","drift|lib/src/runtime/query_builder/query_builder.dart","drift|lib/src/runtime/executor/executor.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

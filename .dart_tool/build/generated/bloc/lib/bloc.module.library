@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["bloc|lib/src/bloc.dart","bloc|lib/src/bloc_observer.dart","bloc|lib/src/change.dart","bloc|lib/src/cubit.dart","bloc|lib/src/transition.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

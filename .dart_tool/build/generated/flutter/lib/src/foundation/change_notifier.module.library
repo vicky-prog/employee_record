@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","flutter|lib/src/foundation/assertions.dart","flutter|lib/src/foundation/diagnostics.dart","flutter|lib/src/foundation/memory_allocations.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["ui"],"hasMain":false}

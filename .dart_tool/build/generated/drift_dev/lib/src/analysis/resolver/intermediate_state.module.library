@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["analyzer|lib/dart/constant/value.dart","analyzer|lib/dart/element/element.dart","drift|lib/drift.dart","sqlparser|lib/sqlparser.dart","drift_dev|lib/src/analysis/driver/state.dart","drift_dev|lib/src/analysis/results/element.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

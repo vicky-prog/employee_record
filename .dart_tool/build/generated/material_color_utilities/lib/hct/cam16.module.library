@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["material_color_utilities|lib/utils/color_utils.dart","material_color_utilities|lib/utils/math_utils.dart","material_color_utilities|lib/hct/viewing_conditions.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["core","math"],"hasMain":false}

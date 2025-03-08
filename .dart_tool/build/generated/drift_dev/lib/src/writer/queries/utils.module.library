@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift_dev|lib/src/analysis/results/results.dart","drift_dev|lib/src/writer/writer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

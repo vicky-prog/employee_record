@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["analyzer|lib/dart/element/element.dart","json_annotation|lib/json_annotation.dart","meta|lib/meta.dart","path|lib/path.dart","recase|lib/recase.dart","sqlparser|lib/sqlparser.dart","drift_dev|lib/src/analysis/results/dart.dart"],"parts":["drift_dev|lib/src/generated/analysis/results/element.g.dart"],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

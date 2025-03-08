@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["analyzer|lib/dart/element/element.dart","path|lib/path.dart","drift_dev|lib/src/utils/string_escaper.dart","drift_dev|lib/src/writer/writer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

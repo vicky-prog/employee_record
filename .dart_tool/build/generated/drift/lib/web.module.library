@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["drift|lib/src/web/sql_js.dart","drift|lib/src/web/storage.dart","drift|lib/src/web/web_db.dart","drift|lib/src/web/channel_new.dart"],"parts":[],"conditionalDeps":[{"$default":"drift|lib/src/web/channel_legacy_dummy.dart","dart.library.html":"drift|lib/src/web/channel_legacy.dart"}],"sdkDeps":[],"hasMain":false}

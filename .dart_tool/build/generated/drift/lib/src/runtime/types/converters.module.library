@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["sqlite3|lib/common.dart","drift|lib/src/dsl/dsl.dart","drift|lib/src/runtime/data_class.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["typed_data","convert"],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["collection|lib/collection.dart","json_annotation|lib/json_annotation.dart","pub_semver|lib/pub_semver.dart","yaml|lib/yaml.dart"],"parts":["pubspec_parse|lib/src/dependency.g.dart"],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

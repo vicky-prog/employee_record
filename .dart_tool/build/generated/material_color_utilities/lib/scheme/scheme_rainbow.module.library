@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["material_color_utilities|lib/dynamiccolor/dynamic_scheme.dart","material_color_utilities|lib/dynamiccolor/variant.dart","material_color_utilities|lib/hct/hct.dart","material_color_utilities|lib/palettes/tonal_palette.dart","material_color_utilities|lib/utils/math_utils.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/backends.dart","drift|lib/drift.dart","drift|lib/src/web/sql_js.dart","drift|lib/src/web/storage.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

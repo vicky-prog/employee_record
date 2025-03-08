@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["sqlparser|lib/sqlparser.dart","sqlparser|lib/src/utils/ast_equality.dart","drift_dev|lib/src/analysis/drift_native_functions.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

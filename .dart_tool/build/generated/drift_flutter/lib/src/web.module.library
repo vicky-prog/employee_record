@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart","drift|lib/wasm.dart","drift_flutter|lib/src/connect.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

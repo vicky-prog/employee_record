@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["build|lib/build.dart","drift_dev|lib/src/backends/build/analyzer.dart","drift_dev|lib/src/backends/build/drift_builder.dart","drift_dev|lib/src/backends/build/preprocess_builder.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

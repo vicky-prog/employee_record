@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["flutter|lib/material.dart","simple_gesture_detector|lib/simple_gesture_detector.dart","table_calendar|lib/src/shared/utils.dart","table_calendar|lib/src/widgets/calendar_core.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["plugin_platform_interface|lib/plugin_platform_interface.dart","path_provider_platform_interface|lib/src/enums.dart","path_provider_platform_interface|lib/src/method_channel_path_provider.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

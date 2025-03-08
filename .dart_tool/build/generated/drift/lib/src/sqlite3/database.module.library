@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","sqlite3|lib/common.dart","drift|lib/backends.dart","drift|lib/src/sqlite3/native_functions.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","collection"],"hasMain":false}

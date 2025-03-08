@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart","meta|lib/meta.dart","meta|lib/meta_meta.dart","drift|lib/src/runtime/types/mapping.dart"],"parts":["drift|lib/src/dsl/columns.dart","drift|lib/src/dsl/database.dart","drift|lib/src/dsl/table.dart"],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

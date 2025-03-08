@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart","drift|lib/remote.dart","meta|lib/meta.dart","stream_channel|lib/stream_channel.dart","drift|lib/src/runtime/cancellation_zone.dart","drift|lib/src/remote/communication.dart","drift|lib/src/remote/protocol.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

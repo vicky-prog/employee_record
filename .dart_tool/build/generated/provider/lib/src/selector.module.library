@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["collection|lib/collection.dart","flutter|lib/foundation.dart","flutter|lib/widgets.dart","nested|lib/nested.dart","provider|lib/src/consumer.dart","provider|lib/src/provider.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

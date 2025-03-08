@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:drift/drift.dart","transitive":false},{"uri":"package:employee_record/data/local/database/app_database.dart","transitive":false},{"uri":"package:employee_record/data/local/database/table/employee_table.dart","transitive":false}],"elements":[{"kind":"databaseAccessor","name":"EmployeeDao","dart_name":"EmployeeDao"}]}

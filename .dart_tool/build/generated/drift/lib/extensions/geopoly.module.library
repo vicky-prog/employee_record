@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["drift|lib/src/runtime/query_builder/query_builder.dart","drift|lib/src/runtime/types/mapping.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["typed_data"],"hasMain":false}

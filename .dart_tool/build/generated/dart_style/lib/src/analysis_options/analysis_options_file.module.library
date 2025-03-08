@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["yaml|lib/yaml.dart","dart_style|lib/src/analysis_options/file_system.dart","dart_style|lib/src/analysis_options/merge_options.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

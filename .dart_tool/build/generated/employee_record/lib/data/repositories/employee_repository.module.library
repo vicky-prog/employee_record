@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["employee_record|lib/data/local/database/app_database.dart","employee_record|lib/data/services/employee_service.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

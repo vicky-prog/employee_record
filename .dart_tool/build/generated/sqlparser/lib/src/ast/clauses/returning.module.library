@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["sqlparser|lib/src/reader/tokenizer/token.dart","sqlparser|lib/src/ast/node.dart","sqlparser|lib/src/ast/statements/select.dart","sqlparser|lib/src/ast/visitor.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

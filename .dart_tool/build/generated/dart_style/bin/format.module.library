@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["args|lib/command_runner.dart","dart_style|lib/src/cli/format_command.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["io"],"hasMain":true}

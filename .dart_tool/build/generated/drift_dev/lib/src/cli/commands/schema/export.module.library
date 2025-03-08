@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["args|lib/command_runner.dart","drift|lib/drift.dart","drift_dev|lib/src/services/schema/schema_isolate.dart","drift_dev|lib/src/cli/commands/schema.dart","drift_dev|lib/src/cli/cli.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","io"],"hasMain":false}

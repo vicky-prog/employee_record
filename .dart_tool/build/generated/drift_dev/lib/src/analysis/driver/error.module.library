@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["analyzer|lib/dart/ast/syntactic_entity.dart","analyzer|lib/dart/element/element.dart","source_gen|lib/source_gen.dart","source_span|lib/source_span.dart","sqlparser|lib/sqlparser.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

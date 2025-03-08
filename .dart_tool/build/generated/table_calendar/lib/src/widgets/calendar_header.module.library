@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["flutter|lib/widgets.dart","intl|lib/intl.dart","table_calendar|lib/src/customization/header_style.dart","table_calendar|lib/src/shared/utils.dart","table_calendar|lib/src/widgets/custom_icon_button.dart","table_calendar|lib/src/widgets/format_button.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["flutter|lib/foundation.dart","path_provider_platform_interface|lib/path_provider_platform_interface.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["io"],"hasMain":false}

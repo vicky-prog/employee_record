@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["analyzer|lib/dart/element/type.dart","sqlparser|lib/utils/case_insensitive_map.dart","drift_dev|lib/src/analysis/results/element.dart","drift_dev|lib/src/analysis/results/column.dart","drift_dev|lib/src/analysis/results/dart.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

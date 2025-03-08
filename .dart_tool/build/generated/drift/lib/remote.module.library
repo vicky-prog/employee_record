@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["meta|lib/meta.dart","stream_channel|lib/stream_channel.dart","drift|lib/drift.dart","drift|lib/remote.dart","drift|lib/src/remote/client_impl.dart","drift|lib/src/remote/communication.dart","drift|lib/src/remote/protocol.dart","drift|lib/src/remote/server_impl.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

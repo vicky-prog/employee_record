@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["flutter|lib/src/foundation/assertions.dart","flutter|lib/src/foundation/constants.dart"],"parts":[],"conditionalDeps":[{"$default":"flutter|lib/src/foundation/_platform_io.dart","dart.library.js_util":"flutter|lib/src/foundation/_platform_web.dart"}],"sdkDeps":[],"hasMain":false}

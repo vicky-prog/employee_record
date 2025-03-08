@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift_dev|lib/src/analysis/results/results.dart","drift_dev|lib/src/utils/string_escaper.dart","drift_dev|lib/src/writer/utils/hash_and_equals.dart","drift_dev|lib/src/writer/utils/override_toString.dart","drift_dev|lib/src/writer/writer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

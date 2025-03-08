@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["stream_channel|lib/stream_channel.dart","web|lib/web.dart","drift|lib/remote.dart","drift|lib/src/remote/protocol.dart","drift|lib/src/remote/web_protocol.dart","drift|lib/src/web/wasm_setup/protocol.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["js_interop"],"hasMain":false}

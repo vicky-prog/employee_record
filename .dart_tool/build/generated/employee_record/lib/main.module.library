@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["employee_record|lib/config/dependencies.dart","employee_record|lib/presentation/core/themes/app_colors.dart","employee_record|lib/presentation/pages/employee_page.dart","flutter|lib/material.dart","flutter_bloc|lib/flutter_bloc.dart","hexcolor|lib/hexcolor.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":true}

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["drift_dev|lib/api/migrations_native.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart","drift|lib/src/utils/synchronized.dart","drift|lib/src/runtime/cancellation_zone.dart","drift|lib/src/runtime/executor/helpers/delegates.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

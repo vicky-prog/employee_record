@@ -1,0 +1,6 @@
+{
+  "elements": {},
+  "imports": [
+    "package:employee_record/data/local/database/connection/unsupported.dart"
+  ]
+}

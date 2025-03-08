@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["dart_style|lib/src/back_end/code_writer.dart","dart_style|lib/src/fast_hash.dart","dart_style|lib/src/profile.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"p":["drift","lib/src/remote/client_impl.dart"],"s":[["drift","lib/src/remote/client_impl.dart"],["drift","lib/src/remote/communication.dart"]],"d":[["drift","lib/backends.dart"],["drift","lib/src/runtime/cancellation_zone.dart"],["meta","lib/meta.dart"],["stack_trace","lib/src/chain.dart"],["stream_channel","lib/stream_channel.dart"]],"m":false,"is":true,"pf":"dart2js"}

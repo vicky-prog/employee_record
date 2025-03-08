@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["sqlparser|lib/src/ast/ast.dart","sqlparser|lib/src/analysis/analysis.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

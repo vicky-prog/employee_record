@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["flutter|lib/src/foundation/assertions.dart","flutter|lib/src/foundation/constants.dart","flutter|lib/src/foundation/diagnostics.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["ui"],"hasMain":false}

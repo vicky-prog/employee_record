@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["dart_style|lib/src/back_end/code_writer.dart","dart_style|lib/src/piece/piece.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

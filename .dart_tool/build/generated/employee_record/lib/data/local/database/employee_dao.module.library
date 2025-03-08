@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["drift|lib/drift.dart","employee_record|lib/data/local/database/app_database.dart","employee_record|lib/data/local/database/table/employee_table.dart"],"parts":["employee_record|lib/data/local/database/employee_dao.g.dart"],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

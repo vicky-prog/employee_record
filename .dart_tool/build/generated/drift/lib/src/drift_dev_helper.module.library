@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/src/runtime/types/converters.dart","drift|lib/src/runtime/types/mapping.dart","drift|lib/src/runtime/query_builder/query_builder.dart","drift|lib/src/dsl/dsl.dart","drift|lib/extensions/geopoly.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["typed_data"],"hasMain":false}

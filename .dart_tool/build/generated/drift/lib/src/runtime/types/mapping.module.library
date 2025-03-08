@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["collection|lib/collection.dart","convert|lib/convert.dart","meta|lib/meta.dart","drift|lib/src/runtime/query_builder/query_builder.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["core","typed_data"],"hasMain":false}

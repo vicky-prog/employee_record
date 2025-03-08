@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["sqlparser|lib/src/ast/node.dart","sqlparser|lib/src/ast/statements/statement.dart","sqlparser|lib/src/ast/visitor.dart","sqlparser|lib/src/ast/drift/declared_statement.dart","sqlparser|lib/src/ast/drift/import_statement.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

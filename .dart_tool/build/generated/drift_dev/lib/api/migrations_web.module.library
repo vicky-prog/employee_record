@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["drift|lib/drift.dart","drift|lib/internal/migrations.dart","drift|lib/wasm.dart","drift_dev|lib/src/services/schema/verifier_web.dart","drift_dev|lib/src/services/schema/verifier_common.dart","sqlite3|lib/wasm.dart","drift_dev|lib/api/migrations_common.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

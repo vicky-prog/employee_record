@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["flutter|lib/rendering.dart","flutter|lib/services.dart","flutter|lib/src/widgets/basic.dart","flutter|lib/src/widgets/editable_text.dart","flutter|lib/src/widgets/framework.dart","flutter|lib/src/widgets/media_query.dart","flutter|lib/src/widgets/text_selection_toolbar_anchors.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

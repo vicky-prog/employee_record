@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","drift|lib/src/runtime/query_builder/query_builder.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

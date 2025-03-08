@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["dart_style|lib/src/profile.dart","dart_style|lib/src/short/line_splitting/line_splitter.dart","dart_style|lib/src/short/line_splitting/solve_state.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

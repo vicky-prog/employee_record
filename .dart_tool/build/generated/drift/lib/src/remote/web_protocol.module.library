@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart","meta|lib/meta.dart","sqlite3|lib/common.dart","drift|lib/src/web/wasm_setup/protocol.dart","drift|lib/src/remote/protocol.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["js_interop"],"hasMain":false}

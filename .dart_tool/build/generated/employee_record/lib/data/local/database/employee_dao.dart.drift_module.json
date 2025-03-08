@@ -1,0 +1,52 @@
+{
+  "elements": {
+    "EmployeeDao": {
+      "id": {
+        "library_uri": "package:employee_record/data/local/database/employee_dao.dart",
+        "name": "EmployeeDao"
+      },
+      "declaration": {
+        "source_uri": "package:employee_record/data/local/database/employee_dao.dart",
+        "offset": 288,
+        "name": "EmployeeDao"
+      },
+      "references": [
+        {
+          "library_uri": "package:employee_record/data/local/database/table/employee_table.dart",
+          "name": "employees"
+        }
+      ],
+      "type": "dao",
+      "tables": [
+        {
+          "library_uri": "package:employee_record/data/local/database/table/employee_table.dart",
+          "name": "employees"
+        }
+      ],
+      "views": [],
+      "includes": [],
+      "queries": [],
+      "dart_type": {
+        "elements": [
+          {
+            "lexeme": "EmployeeDao",
+            "import_uri": "package:employee_record/data/local/database/employee_dao.dart"
+          }
+        ]
+      },
+      "database": {
+        "elements": [
+          {
+            "lexeme": "AppDatabase",
+            "import_uri": "package:employee_record/data/local/database/app_database.dart"
+          }
+        ]
+      }
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart",
+    "package:employee_record/data/local/database/app_database.dart",
+    "package:employee_record/data/local/database/table/employee_table.dart"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:drift/drift.dart",
+    "package:employee_record/presentation/blocs/bloc/employee_bloc.dart",
+    "package:employee_record/presentation/widgets/calendar_dialog.dart",
+    "package:flutter/material.dart",
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:employee_record/data/local/database/app_database.dart"
+  ]
+}

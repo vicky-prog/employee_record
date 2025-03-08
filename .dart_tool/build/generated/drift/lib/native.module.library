@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["async|lib/async.dart","drift|lib/drift.dart","drift|lib/isolate.dart","meta|lib/meta.dart","sqlite3|lib/common.dart","sqlite3|lib/sqlite3.dart","drift|lib/backends.dart","drift|lib/src/sqlite3/database.dart","drift|lib/src/sqlite3/database_tracker.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","io","isolate"],"hasMain":false}

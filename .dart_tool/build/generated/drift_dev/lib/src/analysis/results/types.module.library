@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart","drift_dev|lib/src/analysis/results/column.dart","drift_dev|lib/src/analysis/results/dart.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["web|lib/web.dart","drift|lib/src/web/wasm_setup.dart","drift|lib/src/web/wasm_setup/protocol.dart","drift|lib/src/web/wasm_setup/shared.dart","drift|lib/src/web/wasm_setup/types.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","js_interop"],"hasMain":false}

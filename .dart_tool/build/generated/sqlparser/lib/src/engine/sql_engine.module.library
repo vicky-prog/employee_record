@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["sqlparser|lib/sqlparser.dart","sqlparser|lib/src/reader/parser.dart","sqlparser|lib/src/reader/tokenizer/scanner.dart","sqlparser|lib/src/engine/autocomplete/engine.dart","sqlparser|lib/src/engine/builtin_tables.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["collection"],"hasMain":false}

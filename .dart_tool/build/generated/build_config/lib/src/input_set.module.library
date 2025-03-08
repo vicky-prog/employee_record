@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["json_annotation|lib/json_annotation.dart"],"parts":["build_config|lib/src/input_set.g.dart"],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

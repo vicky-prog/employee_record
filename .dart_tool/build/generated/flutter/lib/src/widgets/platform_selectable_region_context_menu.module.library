@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":[],"parts":[],"conditionalDeps":[{"$default":"flutter|lib/src/widgets/_platform_selectable_region_context_menu_io.dart","dart.library.js_util":"flutter|lib/src/widgets/_platform_selectable_region_context_menu_web.dart"}],"sdkDeps":[],"hasMain":false}

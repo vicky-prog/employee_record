@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:employee_record/data/local/database/app_database.dart",
+    "package:employee_record/data/repositories/employee_repository.dart",
+    "package:equatable/equatable.dart",
+    "package:flutter_bloc/flutter_bloc.dart"
+  ]
+}

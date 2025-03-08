@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:employee_record/config/dependencies.dart",
+    "package:employee_record/presentation/core/themes/app_colors.dart",
+    "package:employee_record/presentation/pages/employee_page.dart",
+    "package:flutter/material.dart",
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:hexcolor/hexcolor.dart"
+  ]
+}

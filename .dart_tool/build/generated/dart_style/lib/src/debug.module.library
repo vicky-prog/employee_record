@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["dart_style|lib/src/piece/piece.dart","dart_style|lib/src/short/chunk.dart","dart_style|lib/src/short/line_splitting/rule_set.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["math"],"hasMain":false}

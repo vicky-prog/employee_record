@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["characters|lib/characters.dart","flutter|lib/src/services/text_layout_metrics.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["math"],"hasMain":false}

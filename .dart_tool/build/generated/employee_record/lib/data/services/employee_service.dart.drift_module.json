@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:employee_record/data/local/database/app_database.dart",
+    "package:employee_record/data/local/database/employee_dao.dart"
+  ]
+}

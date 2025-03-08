@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["analyzer|lib/dart/ast/token.dart","analyzer|lib/source/line_info.dart","dart_style|lib/src/comment_type.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["collection"],"hasMain":false}

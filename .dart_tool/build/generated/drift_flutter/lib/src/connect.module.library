@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/src/web/wasm_setup/types.dart"],"parts":[],"conditionalDeps":[{"$default":"drift_flutter|lib/src/unsupported.dart","dart.library.js_interop":"drift_flutter|lib/src/web.dart","dart.library.ffi":"drift_flutter|lib/src/native.dart"}],"sdkDeps":[],"hasMain":false}

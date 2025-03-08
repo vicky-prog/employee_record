@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","drift|lib/src/runtime/api/runtime_api.dart","drift|lib/src/runtime/devtools/service_extension.dart","drift|lib/src/runtime/devtools/shared.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["convert","developer"],"hasMain":false}

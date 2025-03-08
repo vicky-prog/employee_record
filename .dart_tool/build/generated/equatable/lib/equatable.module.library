@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["equatable|lib/src/equatable.dart","equatable|lib/src/equatable_config.dart","equatable|lib/src/equatable_mixin.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

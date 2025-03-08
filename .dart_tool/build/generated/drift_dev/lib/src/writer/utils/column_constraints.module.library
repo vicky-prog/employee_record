@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart","drift|lib/sqlite_keywords.dart","sqlparser|lib/sqlparser.dart","drift_dev|lib/src/analysis/results/results.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

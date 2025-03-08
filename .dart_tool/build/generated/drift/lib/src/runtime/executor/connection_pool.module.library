@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["drift|lib/drift.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}
