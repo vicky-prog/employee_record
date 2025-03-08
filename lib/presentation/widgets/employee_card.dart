@@ -11,7 +11,7 @@ class EmployeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(employee.name), // Unique key for Dismissible
+      key: ValueKey(employee.name), 
       direction: DismissDirection.endToStart, // Swipe left to delete
       background: Container(
         alignment: Alignment.centerRight,
