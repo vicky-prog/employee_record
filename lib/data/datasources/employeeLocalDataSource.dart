@@ -2,10 +2,10 @@ import 'package:employee_record/data/local/database/app_database.dart';
 import 'package:employee_record/data/local/database/employee_dao.dart';
 
 
-class EmployeeService {
+class EmployeeLocalDataSource {
   final EmployeeDao _employeeDao;
 
-  EmployeeService(this._employeeDao);
+  EmployeeLocalDataSource(this._employeeDao);
 
   Future<List<Employee>> getAllEmployees() async {
     return await _employeeDao.getEmployees();

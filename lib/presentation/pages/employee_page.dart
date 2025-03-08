@@ -5,12 +5,27 @@ import 'package:employee_record/presentation/widgets/date_selection_row.dart';
 import 'package:employee_record/presentation/widgets/employee_list.dart';
 import 'package:employee_record/presentation/widgets/fotter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:employee_record/data/local/database/app_database.dart';
 
 double _radies = 4;
 double _inputFiledheight = 45;
 const sizedBoxSpacing = SizedBox(height: 20);
+double webWidth = 900;
+
+ final ButtonStyle webButtonStyle = ElevatedButton.styleFrom(
+  padding: const EdgeInsets.symmetric(vertical: 14.0), 
+  backgroundColor: Colors.blue,
+  foregroundColor: Colors.white,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(8.0), 
+  ),
+  textStyle: const TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w500,
+  ),
+);
 
 class EmployeeScreen extends StatefulWidget {
   const EmployeeScreen({super.key});
@@ -176,8 +191,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text("Swipe left to delete"),
+                            alignment: Alignment.centerLeft,
+                            child: Text("Swipe left to delete",style: TextStyle(color: Colors.grey),),
                           ),
                         ),
                       )
@@ -223,52 +238,105 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
         return "Edit Employee Details";
     }
   }
+ 
 
   // Employee Form (Add/Edit)
   Widget _buildEmployeeForm(BuildContext context, EmployeeState state) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  // Employee Name Field
-                  _employeeNameField(),
-                  sizedBoxSpacing,
-                  // Select Role Field (Clickable)
-                  _selectRoleField(),
-                  sizedBoxSpacing,
+    return LayoutBuilder(
+      builder: (context,constraints) {
+         double screenWidth = constraints.maxWidth;
+      double horizontalPadding = screenWidth > webWidth ? screenWidth * 0.25 : 16.0;
+      double verticalPadding = screenWidth > webWidth ? 50:16;
+       bool isWeb = screenWidth > webWidth;
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding,vertical: verticalPadding),
+                  child: Column(
+                    children: [
+                      // Employee Name Field
+                      _employeeNameField(),
+                      sizedBoxSpacing,
+                      // Select Role Field (Clickable)
+                      _selectRoleField(),
+                      sizedBoxSpacing,
 
-                  // Date Selection Row
-                  DateSelectionRow(
-                    onFromDateTap: () {
-                      _openCalendarDialog(false, state);
+                    
+        
+                      // Date Selection Row
+                      DateSelectionRow(
+                        onFromDateTap: () {
+                          _openCalendarDialog(false, state);
+                        },
+                        onToDateTap: () {
+                          _openCalendarDialog(true, state);
+                        },
+                        fromDate: _fromDate,
+                        toDate: _toDate,
+                      ),
+                    
+               isWeb
+    ? Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: SizedBox(
+          height: _inputFiledheight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 50, // Explicitly setting button height
+                  child: ElevatedButton(
+                    style: webButtonStyle,
+                    onPressed: () {
+                      context.read<EmployeeBloc>().add(
+                        SwitchFormState(formState: EmployeeFormState.list),
+                      );
                     },
-                    onToDateTap: () {
-                      _openCalendarDialog(true, state);
-                    },
-                    fromDate: _fromDate,
-                    toDate: _toDate,
+                    child: const Text("Cancel"),
                   ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: SizedBox(
+                  height: 50, // Explicitly setting button height
+                  child: ElevatedButton(
+                    style: webButtonStyle,
+                    onPressed: () {
+                      _saveEmployee(context, state);
+                    },
+                    child: const Text("Save"),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+      )
+    : const SizedBox()
 
-        EmployeeFormActions(
-          onCancel: () {
-            context.read<EmployeeBloc>().add(
-              SwitchFormState(formState: EmployeeFormState.list),
-            );
-          },
-          onSave: () {
-            _saveEmployee(context, state);
-          },
-        ),
-      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        
+           !isWeb? EmployeeFormActions(
+              onCancel: () {
+                context.read<EmployeeBloc>().add(
+                  SwitchFormState(formState: EmployeeFormState.list),
+                );
+              },
+              onSave: () {
+                _saveEmployee(context, state);
+              },
+            ):SizedBox(),
+          ],
+        );
+      }
     );
   }
 
@@ -281,7 +349,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
       child: TextFormField(
         controller: nameController,
         cursorHeight: 18,
-
+ inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]*$')), // Allow only letters and spaces
+          LengthLimitingTextInputFormatter(30), // Set max length to 30
+        ],
         decoration: InputDecoration(
           hintText: "Employee name",
           prefixIcon: const Icon(Icons.person_outline, color: Colors.blue, ),
@@ -290,6 +361,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
       ),
     );
   }
+
+ 
 
   _selectRoleField() {
     return GestureDetector(
@@ -375,9 +448,9 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     context: context,
     builder: (context) {
       return CalendarDialog(
-        allowPast: state.formState == EmployeeFormState.edit,
+       // allowPast: state.formState == EmployeeFormState.edit,
         disableDay: state.formState == EmployeeFormState.edit
-            ? null
+            ? _fromDate
             : (toDate ? _fromDate : null),
         toDate: toDate,
         selectedDay: toDate

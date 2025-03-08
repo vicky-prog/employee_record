@@ -1,5 +1,5 @@
 import 'package:employee_record/data/local/database/app_database.dart';
-import 'package:employee_record/data/repositories/employee_repository.dart';
+import 'package:employee_record/domain/repositories/employee_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
