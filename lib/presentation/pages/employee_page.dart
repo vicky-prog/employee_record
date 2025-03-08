@@ -2,7 +2,10 @@ import 'package:drift/drift.dart' show Value;
 import 'package:employee_record/presentation/blocs/bloc/employee_bloc.dart';
 import 'package:employee_record/presentation/widgets/calendar_dialog.dart';
 import 'package:employee_record/presentation/widgets/date_selection_row.dart';
+import 'package:employee_record/presentation/widgets/employee_card.dart';
+import 'package:employee_record/presentation/widgets/employee_list.dart';
 import 'package:employee_record/presentation/widgets/fotter.dart';
+import 'package:employee_record/presentation/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:employee_record/data/local/database/app_database.dart';
@@ -62,7 +65,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     super.didChangeDependencies();
     final state = context.read<EmployeeBloc>().state;
 
-    if (state.formState == EmployeeFormState.edit && state.editingEmployee != null) {
+    if (state.formState == EmployeeFormState.edit &&
+        state.editingEmployee != null) {
       nameController.text = state.editingEmployee!.name;
       selectedRole = state.editingEmployee!.position ?? "Select role";
       _fromDate = state.editingEmployee!.dateOfJoining;
@@ -94,7 +98,35 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           } else if (state.errorMessage != null) {
             return Center(child: Text(state.errorMessage!));
           } else if (state.formState == EmployeeFormState.list) {
-            return _buildEmployeeList(context, state);
+            return Column(
+              children: [
+                Expanded(child: EmployeeList(employees: state.employees, onDismissed: (employee) { 
+                 context.read<EmployeeBloc>().add(DeleteEmployee(employee.id));
+                 }, onTap: (employee) { 
+                  print("ontap");
+                   context.read<EmployeeBloc>().add(
+                    SwitchFormState(
+                      formState: EmployeeFormState.edit,
+                      employee: employee,
+                      name: employee.name,
+                      selectedRole: employee.position ?? "Select role",
+                      dateOfJoining: employee.dateOfJoining,
+                    ),
+                  );
+                  },)),
+                Container(
+                  color: Colors.grey.shade200,
+                  height: 80,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Swipe left to delete")),
+                  ),
+                ),
+              ],
+            );
           } else {
             return _buildEmployeeForm(context, state);
           }
@@ -105,12 +137,17 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
           context.watch<EmployeeBloc>().state.formState ==
                   EmployeeFormState.list
               ? FloatingActionButton(
+                backgroundColor: Colors.blue,
+                 elevation: 5.0, 
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0), 
+        ),
                 onPressed: () {
                   context.read<EmployeeBloc>().add(
                     SwitchFormState(formState: EmployeeFormState.add),
                   );
                 },
-                child: Icon(Icons.add),
+                child: Icon(Icons.add, color: Colors.white),
               )
               : null,
     );
@@ -130,7 +167,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   }
 
   //  Employee List View
-  Widget _buildEmployeeList(BuildContext context, EmployeeState state) {
+  Widget _buildEmployeeList2(BuildContext context, EmployeeState state) {
     if (state.employees.isEmpty) {
       return Center(
         child: Image.asset(
@@ -178,7 +215,6 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
 
   // Employee Form (Add/Edit)
   Widget _buildEmployeeForm(BuildContext context, EmployeeState state) {
-    
     return Column(
       children: [
         Expanded(
